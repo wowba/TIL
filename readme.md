@@ -1,4 +1,4 @@
 # Today I Learned(TIL) Wiki
 
 ## Test
-*[Test](test\test.md)
+* [Test](test\test.md)
