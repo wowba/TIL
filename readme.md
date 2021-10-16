@@ -3,7 +3,7 @@
 ## JavaScript
 
 ## CSS
-* [reset.css](https://github.com/wowba/TIL/blob/main/css/reset.css.md)
+* [reset.css](https://github.com/wowba/TIL/blob/main/CSS/reset.css.md)
 
 ## ETC
 
