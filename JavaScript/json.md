@@ -22,7 +22,7 @@ package.json 파일은 NodeJS 프로젝트를 만들 때 가장 먼저 만들어
 npm init
 ```
 
-결과
+결과 (예시)
 
 ```
 {
