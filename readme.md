@@ -6,6 +6,8 @@
 
 - [NPM](https://github.com/wowba/TIL/blob/main/JavaScript/npm.md)
 
+-[.json](https://github.com/wowba/TIL/blob/main/JavaScript/.json.md)
+
 ## CSS
 
 - [Reset.css](https://github.com/wowba/TIL/blob/main/CSS/reset.css.md)
