@@ -2,7 +2,9 @@
 
 ## JavaScript
 
-- [What Is NodeJS?](https://github.com/wowba/TIL/blob/main/JavaScript/whatisnodejs.md)
+- [What Is NodeJS?](https://github.com/wowba/TIL/blob/main/JavaScript/nodejs.md)
+
+- [NPM](https://github.com/wowba/TIL/blob/main/JavaScript/npm.md)
 
 ## CSS
 
