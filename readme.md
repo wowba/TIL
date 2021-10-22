@@ -8,6 +8,8 @@
 
 - [.json](https://github.com/wowba/TIL/blob/main/JavaScript/json.md)
 
+- [Babel](https://github.com/wowba/TIL/blob/main/JavaScript/babel.md)
+
 ## CSS
 
 - [Reset.css](https://github.com/wowba/TIL/blob/main/CSS/reset.css.md)

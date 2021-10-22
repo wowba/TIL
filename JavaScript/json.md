@@ -74,7 +74,33 @@ npm i 를 통해 package를 설치하면 package.json 파일에 "dependencies" �
 해당 package의 "dependencies" 에 있는 다른 package들도 node_modules 폴더에 같이 설치가 된다.
 
 ```
+npm i express / npm install express
+```
+
+```
 "dependencies": {
     "express": "^4.17.1"
+  }
+```
+
+## "devDependencies"
+
+devDependencies는 개발자에게 필요한 dependencies다. 반드시 필요한건 아니지만, 개발을 편리하게 하기 위해 필요한 것들을 의미한다.
+Babel 은 프로젝트를 위해 반드시 필요한 package는 아니지만 개발을 편리하게 해주는 package 이기에 "debDependencies" 에 포함된다.
+
+하지만 그냥 설치하면 "dependencies" 항목으로 이동하는데, 이를 방지하려면 다음과 같이 입력해야 한다.
+
+```
+npm i --save--dev @babel/core
+```
+
+npm i 는 설치한다는 코드, @babel/core 는 설치하려는 package의 이름이며
+--save--dev 가 package.json 파일에 "debDependencies" 라는 항목을 추가에 해당 package를 넣어준다.
+
+(결과)
+
+```
+"devDependencies": {
+    "@babel/core": "^7.15.8"
   }
 ```

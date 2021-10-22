@@ -42,3 +42,6 @@ package-lock.json 파일은 package를 설치하면 자동으로 생기는데,
 
 만약 프로젝트를 공유하기 위해 "main" 파일과 package.json 만 보내고 npm i 로 나머지 package를 설치한다면 버전이 맞지 않을 수 있다.
 하지만 package-lock.json 파일도 같이 보내면 정확하게 똑같은 version을 설치하기에 에러가 일어날 확률이 매우 낮다.
+
+package-lock.json 파일은 또한 npm 버전을 맞춰줘야 하는데, 설치하고자 하는 shell 의 npm 버전이 package-lock.json 파일 내부의
+npm 버전과 맞지 않으면 오류가 날 수 있다.
