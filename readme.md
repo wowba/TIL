@@ -8,7 +8,7 @@
 
 - [.json](https://github.com/wowba/TIL/blob/main/JavaScript/json.md)
 
-- [Babel](https://github.com/wowba/TIL/blob/main/JavaScript/babel.md)
+- [Babel / Nodemon](https://github.com/wowba/TIL/blob/main/JavaScript/babel.md)
 
 ## CSS
 

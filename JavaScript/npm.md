@@ -33,7 +33,7 @@ npm i(install) 뒤에 설치하고 싶은 package 의 이름을 적으면 된다
 npm i / npm install
 ```
 
-해당 코드는 package.json에 있는 "dependencies" 항목의 package 들을 알아서 설치해준다. NPM 은 굉장히 똑똑하다.
+해당 코드는 package.json에 있는 "dependencies", "devDependencies" 항목의 package 들을 알아서 설치해준다. NPM 은 굉장히 똑똑하다.
 
 ## package-lock.json
 
