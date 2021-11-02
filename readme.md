@@ -13,6 +13,7 @@
 ## Express
 
 - [Express로 서버 만들기](https://github.com/wowba/TIL/blob/main/Express/whatisexpress.md)
+- [Request](https://github.com/wowba/TIL/blob/main/Express/getRequest.md)
 
 ## CSS
 
