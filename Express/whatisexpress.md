@@ -35,6 +35,7 @@ app.listen(4000(port), handleListening(callback))
 listen()의 argument는 port, callback 이 있다.
 
 먼저 서버에게 어떤 port(4000)를 listening 할지 입력해야 하고, 그 다음 서버가 작동할 callback 함수를 입력해야 한다.
+app.listen 덕에 서버는 종료되지 않고 한번 작동되면 port 4000으로 request가 들어오는지 계속 listening 하고 있는것 !
 
 ```
 const handleListening = () => console.log("Server Listening on port 4000)
