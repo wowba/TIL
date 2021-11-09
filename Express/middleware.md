@@ -85,3 +85,24 @@ const privateMiddleware = (req, res, next) => {
 다음과 같이 middleware를 만든다면, 중간 if문에 의해
 return되어 controller가 될 수도 있고, 조건에 부합하면 middleware로 사용될 수 있다.
 연결이 중단되면 middleware가 아니다.
+
+## morgan
+
+morgan은 middleware 중 하나인데 꽤 간편하다.
+NPM 으로 다운받을 수 있으며
+
+```
+npm i morgan
+```
+
+다양한 기능이 있고, "dev" 를 사용할 경우
+GET, path, status code 등 다양한 정보를 한번에 가져온다.
+global middleware로 사용하면 편리하다.
+
+```
+@import morgan from "morgan";
+
+const logger = morgan("dev");
+
+app.use(logger);
+```
