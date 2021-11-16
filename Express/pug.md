@@ -188,3 +188,11 @@ html(lang="ko")
         block content
     include partials/footer.pug
 ```
+
+추가로, #{pageTitle} 이 아닌 다른 방법으로도 변수 입력이 가능하다.
+
+```
+h1=pageTitle
+```
+
+다만 위 방법은 해당 줄에 `변수만` 들어가면 사용 가능하다.
