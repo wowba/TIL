@@ -72,7 +72,7 @@ home.pug 라는 파일을 만들고 이를 보여주고 싶다면 서버의 cont
 export const home = (req, res) => res.render("home")
 ```
 
-## [include](https://pugjs.org/language/includes.html)
+## [partial](https://pugjs.org/language/includes.html)
 
 Pug의 장점중 하나이다!
 다른 파일을 가져와서 모든 파일에 코드를 반복하지 않고 한 파일로 모든 템플릿을 업데이트 할 수 있다.
@@ -196,3 +196,174 @@ h1=pageTitle
 ```
 
 다만 위 방법은 해당 줄에 `변수만` 들어가면 사용 가능하다.
+
+## [Conditionals](https://pugjs.org/language/conditionals.html)
+
+pug는 자바스크립트 기반이기에 조건문을 사용할 수 있다.
+
+다음은 로그인 상태에 따라 logout, login 2가지를 하나씩 보여주는 예문이다.
+
+```
+doctype html
+html(lang="ko")
+    head
+        title  #{pageTitle} | Wetube
+    body
+        header
+            nav
+                ul
+                    if fakeUser.loggedIn
+                        li
+                            a(href="/login") Logout
+                    else
+                        li
+                            a(href="/login") Login
+            h1=pageTitle
+        main
+            block content
+    include partials/footer.pug
+```
+
+## [iteration](https://pugjs.org/language/iteration.html)
+
+array 또한 pug 에서 표현할 수 있다!
+iteration 을 사용하려면 우선 array나 object를 controller에서 argument로 받아야 한다.
+
+```
+const videos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+export const trending = (req, res) =>
+  res.render("home", { pageTitle: "Home", videos: videos });
+```
+
+home.pug 파일에서 videos 라는 array를 표현하려면 pug의 each를 사용할 수 있다.
+
+```
+doctype html
+html(lang="ko")
+    head
+        title  #{pageTitle} | Wetube
+    body
+        header
+            h1=pageTitle
+        main
+            Here is trending Video!
+
+            each video in videos
+                li=video
+```
+
+다음과 같이 보여진다.
+
+```
+Here is trending Video!
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+```
+
+## [Mixin](https://pugjs.org/language/mixins.html)
+
+mixin 은 똑똑한 partial 이라고 보면 된다. 데이터를 받을 수 있는 html block 이라고 생각하자.
+즉, 반복되는 것들을 component로 만들어 여러곳에서 재사용 할 수 있는 것이라고 보면 된다.
+(틀만 만들어 두면 가져오는 데이터에 따라 다르게 보인다! 유튜브가 매번 다른 동영상을 보여주는것과 비슷하다.)
+
+우선 mixin.pug 파일을 만들어준다.
+
+```
+mixin video(info)
+    div
+        h4=info.title
+        ul
+            li #{info.rating}/5
+            li #{info.comments} comments.
+            li Posted #{createdAt}
+            li #{info.views} views.
+```
+
+mixin 파일을 만드는건 partial 파일을 만드는 것과 비슷하다.
+
+그 다음으로는 mixin.pug 파일을 불러온다.
+
+```
+include mixins/mixin.pug
+
+block content
+    h1 Here is trending Video!
+
+    each potato in videos
+        +video(potato)
+    else
+        sorry nothing found
+```
+
+partial 파일을 불러오는 것처럼 mixin.pug 파일을 include를 사용해 가져온다.
+
+```
+const videos = [
+  {
+    title: "video 1",
+    rating: 5,
+    comment: 2,
+    createdAt: "2 m ago",
+    views: 59,
+    id: 1,
+  },
+  {
+    title: "video 2",
+    rating: 5,
+    comment: 2,
+    createdAt: "2 m ago",
+    views: 59,
+    id: 1,
+  },
+  {
+    title: "video 3",
+    rating: 5,
+    comment: 2,
+    createdAt: "2 m ago",
+    views: 59,
+    id: 1,
+  },
+];
+
+export const trending = (req, res) =>
+  res.render("home", { pageTitle: "Home", videos: videos });
+```
+
+그리고 위와 같이 videos 라는 변수를 conrtoller를 통해 보내면 다음과 같이 나온다.
+
+```
+Here is trending Video!
+
+video 1
+
+5/5
+comments.
+Posted
+59 views.
+
+video 2
+
+5/5
+comments.
+Posted
+59 views.
+
+video 3
+
+5/5
+comments.
+Posted
+59 views.
+```
+
+이렇게 다음에도 재사용 할 수 있는 mixin 파일을 만들었다.
