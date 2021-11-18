@@ -26,6 +26,8 @@
 
 - [Pug](https://github.com/wowba/TIL/blob/main/Express/pug.md)
 
+- [POST method](https://github.com/wowba/TIL/blob/main/Express/post.md)
+
 ## CSS
 
 - [Reset.css](https://github.com/wowba/TIL/blob/main/CSS/reset.css.md)

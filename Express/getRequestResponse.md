@@ -55,6 +55,8 @@ const handleListening = () =>
 app.listen(PORT, handleListening);
 ```
 
+보통 GET method 는 검색어를 보내거나 할때, 즉 단순히 데이터를 받는게 목적일 때 사용된다.
+
 ## Route Handler
 
 ```

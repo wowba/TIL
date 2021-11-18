@@ -46,3 +46,29 @@ videoRouter.get("/:id(\\d+)", see);
 - [정규식 정리 글](https://kasterra.github.io/regex1-the-basic-operation/)
 
 이를 통해 다양한 parameter를 적재적소로 사용 가능하다.
+
+## Absoulte, Infinite URL
+
+Absolute URL은 앞에 /가 들어간다면 어떤 라우트에 있던지 상관없이 root 경로 + 입력한 URL 로 간다.
+
+```
+현재 Route는 /home
+
+a(href="/video") Watch Video, 링크를 누르면 이동
+
+URL 결과
+
+/video
+```
+
+Relative URL은 입력한 URL 앞에 / 가 들어가지 않으면 해당 라우터 뒤에 자동으로 입력한 URL이 붙은 주소로 간다.
+
+```
+현재 Route는 /home
+
+a(href="video") Watch Video, 링크를 누르면 이동
+
+URL 결과
+
+/home/video
+```
