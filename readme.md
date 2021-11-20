@@ -28,6 +28,8 @@
 
 - [POST method](https://github.com/wowba/TIL/blob/main/Express/post.md)
 
+- [init.js](<(https://github.com/wowba/TIL/blob/main/Express/init.md)>)
+
 ## Mongo
 
 - [MongoDB 설치 및 테스트](https://github.com/wowba/TIL/blob/main/mongoDB/mongodbInstall.md)
