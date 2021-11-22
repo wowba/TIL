@@ -76,6 +76,8 @@ const videoSchema = new mongoose.Schema({
 const Video = mongoose.model("Video", videoSchema);
 ```
 
+`위 파일의 meta값이 string로 저장되는 경우, 저장된 데이터의 meta값은 아예 사라진다! mongoose는 기본적으로 똑똑해서 몇가지 오류들을 잡아준다.`
+
 이 파일을 POST 하는 컨트롤러를 만든다.
 
 ```
@@ -114,7 +116,7 @@ export const postUpload = (req, res) => {
 하지만 이렇게 해선 저장이 되지 않는다. save를 하지 않았기 때문이다.
 save는 promise를 return 해주는데, database에 정보가 기록되는데 시간이 걸리기 때문이다.
 
-컨트롤러를 다음과 같이 다시 바꾼다. (promise 이기 때문에 async와 await을 활용해야 한다!)
+컨트롤러를 다음과 같이 다시 바꾼다. `(promise 이기 때문에 async와 await을 활용해야 한다!)`
 
 ```
 export const postUpload = async (req, res) => {
@@ -131,5 +133,31 @@ export const postUpload = async (req, res) => {
   });
   await video.save();
   return res.redirect("/");
+};
+```
+
+이렇게 하면 데이터베이스에 저장이 가능하다! 야호!
+아래처럼 create()와 try/ catch 를 사용하면 깔끔하고 에러도 표시할 수 있다.
+
+```
+xport const postUpload = async (req, res) => {
+  const { title, hashtags, description } = req.body;
+  try {
+    await Video.create({
+      title,
+      description,
+      hashtags: hashtags.split(",").map((word) => `#${word}`),
+      meta: {
+        views: 0,
+        rating: 0,
+      },
+    });
+    return res.redirect("/");
+  } catch (error) {
+    return res.render("upload", {
+      pageTitle: `Upload Video`,
+      errorMessage: error._message,
+    });
+  }
 };
 ```

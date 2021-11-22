@@ -20,7 +20,7 @@ Model에 어떤 데이터를 담고 있는 모습인지 정확하게 입력해�
 
 특정한 값을 입력하는 것이 아니라, 추후에 특정 값들을 받을 수 있는 틀이 곧 Model이다.
 
-## How to Make Model?
+## How to Make Model? / [Schema](https://mongoosejs.com/docs/guide.html)
 
 먼저 model 폴더를 만든 뒤 안에 js 파일을 만든다.
 `Mongoose 에서 model 파일 이름의 첫번째 문자는 대문자로 하는것이 관습이다! ex) Video.js`
@@ -70,6 +70,24 @@ export default Video;
 
 `또한 이 model을 사용하는 controller 에서도 import 해줘야 한다!`
 
+기본적으로 schema 안의 데이터들은 몇개 없어도 저장이 되지만,
+
+아래와 같이 Html 처럼 required: true 를 이용하여 특정 데이터가 없으면 저장이 되지 않게 만들 수 있다!
+몽구스에게 데이터 타입을 구체적으로 적어준다면 유용하게 사용할 수 있다.
+
+```
+const videoSchema = new mongoose.Schema({
+  title: String,
+  description: String,
+  createdAt: {type:Date, required: true},
+  hashtags: [{ type: String }],
+  meta: {
+    views: Number,
+    rating: Number,
+  },
+});
+```
+
 ## [Queries](https://mongoosejs.com/docs/queries.html)
 
 몽구스의 model은 CRUD operation를 위한 다양한 query들을 제공한다.
@@ -77,9 +95,7 @@ export default Video;
 
 몽구스의 쿼리는 callback function 또는 promise를 통해 활용할 수 있다.
 
-기본적으로 데이터베이스는 자바스크립트 바깥에 위치하기 때문에 가져오려면 아무리 짧아도 시간이 소요되며,
-
-원인 모를 에러가 발생할 수도 있다.
+기본적으로 데이터베이스는 자바스크립트 바깥에 위치하기 때문에 가져오려면 아무리 짧아도 시간이 소요되며, 원인 모를 에러가 발생할 수도 있다.
 
 ## Callback function
 
