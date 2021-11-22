@@ -56,3 +56,80 @@ db.once("open", handleOpen);
 
 db.on 은 해당 이벤트가 일어날 때마다 출력되고,
 db.once 는 처음 서버를 여는 그 순간에만 출력된다. 이제 데이터베이스가 정상인지 확인 가능하다.
+
+## 데이터베이스 파일 서버에 저장하기
+
+다음과 같은 model 파일이 있다고 가정하자.
+
+```
+const videoSchema = new mongoose.Schema({
+  title: String,
+  description: String,
+  createdAt: Date,
+  hashtags: [{ type: String }],
+  meta: {
+    views: Number,
+    rating: Number,
+  },
+});
+
+const Video = mongoose.model("Video", videoSchema);
+```
+
+이 파일을 POST 하는 컨트롤러를 만든다.
+
+```
+export const postUpload = (req, res) => {
+  const { title, hashtags, description } = req.body;
+  const video = new Video({
+    title,
+    description,
+    createdAt: Date.now(),
+    hashtags: hashtags.split(",").map((word) => `#${word}`),
+    meta: {
+      views: 0,
+      rating: 0,
+    },
+  });
+  console.log(video);
+  return res.redirect("/");
+};
+```
+
+데이터를 입력한 뒤 콘솔창을 확인해보면
+
+```
+{
+  title: 'wow',
+  description: 'hello',
+  createdAt: 2021-11-22T05:35:10.241Z,
+  hashtags: [ '#hi', '#potato', '#tomato' ],
+  meta: { views: 0, rating: 0 },
+  _id: new ObjectId("619b2c0e79a036fd80d6be08")
+}
+```
+
+입력한 정보들과 자바스크립트 코드로 만든 내용이 나오고, mongoose 에서 id 또한 부여해준다.
+
+하지만 이렇게 해선 저장이 되지 않는다. save를 하지 않았기 때문이다.
+save는 promise를 return 해주는데, database에 정보가 기록되는데 시간이 걸리기 때문이다.
+
+컨트롤러를 다음과 같이 다시 바꾼다. (promise 이기 때문에 async와 await을 활용해야 한다!)
+
+```
+export const postUpload = async (req, res) => {
+  const { title, hashtags, description } = req.body;
+  const video = new Video({
+    title,
+    description,
+    createdAt: Date.now(),
+    hashtags: hashtags.split(",").map((word) => `#${word}`),
+    meta: {
+      views: 0,
+      rating: 0,
+    },
+  });
+  await video.save();
+  return res.redirect("/");
+};
+```

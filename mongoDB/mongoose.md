@@ -105,3 +105,40 @@ videos []
 코드 순서상으론 Video.find 아래에 있는 error와 videos가 먼저 나와야 하는데, Hello가 제일 먼저 나온다.
 
 이는 find 의 argument인 callback function 때문에 일어난 일이다. 특정 코드를 마지막에 실행하게 만드는 것.
+
+하지만 error 를 찾기에는 callback이 편리하다. 한번에 바로 볼 수 있기 때문.
+
+callback 의 단점은, 함수 안에 함수가 계속 들어가서 코드가 장황해진다.
+하지만 Promise를 쓰면 이런 장황한 코드를 쓸 필요가 없다.
+
+## Promise
+
+자바스크립트는 원래 기다려주는 기능이 없기 때문에 callback 을 쓰게 되면 순서가 꼬이는 현상이 발생한다.
+
+하지만 Promise의 await 을 사용하게 되면 데이터베이스에게서 결과값을 받을때까지 자바스크립트는 기다려준다! 또한 굉장히 직관적이고 이해하기 쉽다.
+
+```
+export const home = async (req, res) => {
+  try {
+    console.log("Starting");
+    const videos = await Video.find({});
+    console.log("Finished");
+    console.log(videos);
+    return res.render("home", { pageTitle: "Home", videos });
+  } catch(error) {
+    return res.render("server-error");
+  }
+};
+```
+
+try/catch를 사용하여 callback 과는 다르게 error 발생시 if/else 처럼 만들 수 있다.
+
+위처럼 callback이 아닌 async 와 await을 이용하면 코드들이 순서대로 작동한다.
+
+```
+Starting
+Finished
+[]
+```
+
+규칙상 await은 무조건 async 아래에서만 작동하기 때문에 무조건 지켜줘야 한다.
