@@ -158,3 +158,114 @@ Finished
 ```
 
 규칙상 await은 무조건 async 아래에서만 작동하기 때문에 무조건 지켜줘야 한다.
+
+## [Middlewares](https://mongoosejs.com/docs/middleware.html)
+
+Express에서의 Middleware는 request 중간에 들어와서 특정 기능을 하는거라면(Morgan 등)
+
+Mongoose의 Middleware는 데이터를 저장, 업데이트 하기 전 또는 후에 Middleware를 적용할 수 있다.
+
+Middleware는 model 파일 안에 만들면 되는데, 중요한건 model() 로 생성하기 전에 middleware를 만들어야 한다.
+
+```
+import mongoose from "mongoose";
+
+const videoSchema = new mongoose.Schema({
+  title: { type: String, required: true, trim: true, maxLength: 80 },
+  description: { type: String, required: true, trim: true, minLength: 20 },
+  createdAt: { type: Date, required: true, default: Date.now },
+  hashtags: [{ type: String, trim: true }],
+  meta: {
+    views: { type: Number, default: 0, required: true },
+    rating: { type: Number, default: 0, required: true },
+  },
+});
+
+videoSchema.pre("save", async function () {
+  this.hashtags = this.hashtags[0]
+    .split(",")
+    .map((word) => (word.startsWith("#") ? word : `#${word}`));
+});
+
+const Video = mongoose.model("Video", videoSchema);
+
+export default Video;
+```
+
+위와 같이 pre middleware를 사용하여 save 되기 전 작동하는 middleware를 만들 수 있다.
+다양한 middleware를 만들 수 있으니 참고하자!
+
+## [Statics](https://mongoosejs.com/docs/guide.html#statics)
+
+불행히도, save()는 hook을 통해 middleware 사용이 가능하지만,
+findByIdAndUpdate() 같은 경우에는 document에 접근이 불가능해 middleware 사용이 불가능하다.
+
+이런 경우, mongoose의 statics 를 사용해 원하는 static function 을 만들 수 있다.
+
+```
+import mongoose from "mongoose";
+
+const videoSchema = new mongoose.Schema({
+  title: { type: String, required: true, trim: true, maxLength: 80 },
+  description: { type: String, required: true, trim: true, minLength: 20 },
+  createdAt: { type: Date, required: true, default: Date.now },
+  hashtags: [{ type: String, trim: true }],
+  meta: {
+    views: { type: Number, default: 0, required: true },
+    rating: { type: Number, default: 0, required: true },
+  },
+});
+
+videoSchema.static("formatHashtags", function (hashtags) {
+  return hashtags
+    .split(",")
+    .map((word) => (word.startsWith("#") ? word : `#${word}`));
+});
+
+const Video = mongoose.model("Video", videoSchema);
+
+export default Video;
+```
+
+여기서 만든 Video.formatHashtags()를 controller에서 사용하면
+
+```
+import Video from "../models/Video.js";
+
+export const postEdit = async (req, res) => {
+  const { id } = req.params;
+  const { title, description, hashtags } = req.body;
+  const video = await Video.exists({ _id: id });
+  if (!video) {
+    return res.render("404", { pageTitle: "ERROR" });
+  }
+  try {
+    await Video.findByIdAndUpdate(id, {
+      title,
+      description,
+      hashtags: Video.formatHashtags(hashtags),
+    });
+    return res.redirect(`/videos/${id}`);
+  } catch (error) {
+    return res.render("404", { pageTitle: "ERROR" });
+  }
+};
+```
+
+다음과 같이 findByIdAndUpdate() 에도 적용할 수 있다.
+이렇게 Video Model에 적용 가능한, 아주 유용한 static function을 만들었다!
+
+## [Operator](https://docs.mongodb.com/manual/reference/operator/query/regex/)
+
+몽고DB 는 다양한 오퍼레이터를 제공하는데, 몽구스는 이들을 사용해서 좀 더 정확한 데이터를 찾거나
+원하는 값을 가진 데이터들을 추려낼 수 있는 코드를 만들 수 있다.
+
+```
+videos = Video.find({
+      title: {
+        $regex: new RegExp(keyword, "i"),
+      }
+```
+
+다음과 같이 특정 keyword의 소,대문자 상관없이 검색하는 Model.find를 만들 수 있다!
+다양한 오퍼레이터를 통해 데이터를 더 확실하게 관리가능하다.
