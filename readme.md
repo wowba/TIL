@@ -28,7 +28,7 @@
 
 - [POST method](https://github.com/wowba/TIL/blob/main/Express/post.md)
 
-- [init.js](<(https://github.com/wowba/TIL/blob/main/Express/init.js.md)>)
+- [init.js](<(https://github.com/wowba/TIL/blob/main/Express/init.md)>)
 
 ## Mongo
 
