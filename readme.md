@@ -30,6 +30,8 @@
 
 - [init.js](https://github.com/wowba/TIL/blob/main/Express/init.md)
 
+- [Status Code](https://github.com/wowba/TIL/blob/main/Express/statusCode.md)
+
 ## MongoDB
 
 - [MongoDB 설치 및 테스트](https://github.com/wowba/TIL/blob/main/mongoDB/mongodbInstall.md)
