@@ -367,3 +367,23 @@ Posted
 ```
 
 이렇게 다음에도 재사용 할 수 있는 mixin 파일을 만들었다.
+
+## locals object
+
+express와 pug 는 response object중 하나인 locals object에 접근할 수 있다. `res.locals.objectName`
+
+이 방법을 이용해 data 를 template 에 공유 가능하다.
+
+express에서 locals object를 보내주는 middleware를 만들어서 pug에 변수를 전역적으로 보낼 수 있게 되는 것!
+
+```
+ex)
+app.use((req, res, next) => {
+    res.locals.objectName = "hello";
+    res.sessionStore.all((error, sessions) => {
+        next();
+    })
+})
+```
+
+중요한 점은 무조건 locals object 안에 있어야 한다는 것이다. 이건 pug에서 `#{objectName}` 으로 불러올 수 있다.
