@@ -12,20 +12,38 @@ Babel 을 사용하면 사용자가 작성한 최신 자바스크립트를 NodeJ
 
 (물론 자바스크립트 말고도 다양한 언어가 나와있다.)
 
-자세한 설치방법은 [홈페이지](https://babeljs.io/)에 나온 대로 따라가면 된다.
+자세한 내용은 [홈페이지](https://babeljs.io/)에 나온 대로 따라가면 된다.
 
-Babel을 사용하려면 다음과 같은 코드를 JavaScript에 입력해야 한다
+처음 설치는
 
 ```
-require("@babel/core").transform("code", {
-  presets: ["@babel/preset-env"],
-});
+npm install --save-dev @babel/core
 ```
 
-"code" 부분에 transform 하고싶은 코드를 넣으면 최신 JavaScript 가 NodeJS 가 이해할 수 있는 형태로 바뀌게 된다.
+그 다음엔 설정 파일을 만들어 줘야 한다.
+해당 파일을 같은 위치에 만들어준다.
 
-하지만 JavaScript 파일에서 직접 코드를 입력하지 않고 package.json 에 파일 시작시 Babel로 컴파일 하는 "scripts" 를 추가할 수 있다.
-설치 후 package.json 파일에서 다음과 같이 입력하면
+```
+babel.config.json
+```
+
+그리고 그 파일에 다음과 같이 입력하자
+
+```
+{
+  "presets": ["@babel/preset-env]
+}
+```
+
+해당 preset은 최신 자바스크립트를 컴파일 해주는 설정이다.
+
+이 다음엔 아래 내용을 설치하자.
+
+```
+npm install @babel/preset-env --save-dev
+```
+
+마지막으로, index.js 파일을 컴파일 해서 실행하는 명령어를 package.json에 추가해준다.
 
 ```
 {
@@ -35,19 +53,9 @@ require("@babel/core").transform("code", {
 }
 ```
 
-```
-npm run dev
-```
-
-index.js 파일을 굳이 코드를 입력해서 변환시킬 필요가 없다. 파일을 실행할 때 마다 변환된다.
-
 ## Nodemon
 
-매번 컴파일 하기 위해
-
-```
-npm run dev
-```
+매번 컴파일 하기 위해 해당 파일을 다시 실행하는건 귀찮다. `npm run dev`
 
 위의 코드를 입력하는건 귀찮다.
 

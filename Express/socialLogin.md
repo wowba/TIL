@@ -18,3 +18,5 @@
 그 다음 해당 주소로 가는 링크를 만들고 주소 뒤에 client_id를 넣어준다.
 
 하지만 이렇게만 하면 public 데이터밖에 못 가져오는데, 더 많은걸 가져오고 싶은 경우 [scope](https://docs.github.com/en/developers/apps/building-oauth-apps/scopes-for-oauth-apps)를 활용할 수 있다.
+
+p.s [fetch](https://developer.mozilla.org/ko/docs/Web/HTTP/Headers)
