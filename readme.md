@@ -2,7 +2,7 @@
 
 ## Node.JS
 
-- [자바스크립트 기본 문법](ttps://github.com/wowba/TIL/blob/main/JavaScript/basicJavascript.md)
+- [자바스크립트 기본 문법](https://github.com/wowba/TIL/blob/main/JavaScript/basicJavascript.md)
 
 - [What Is NodeJS?](https://github.com/wowba/TIL/blob/main/JavaScript/nodejs.md)
 
