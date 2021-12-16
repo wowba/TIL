@@ -126,7 +126,7 @@ if (age > 20 || age < 30){
 해당 조건을 만족할 때 까지 작성한 코드를 반복한다.
 
 ```
-for (let i = 0; i < 6, i++) {
+for (let i = 0; i < 6; i++) {
     console.log(i)
 }
 

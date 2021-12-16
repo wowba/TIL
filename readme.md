@@ -4,6 +4,10 @@
 
 - [자바스크립트 기본 문법](https://github.com/wowba/TIL/blob/main/JavaScript/basicJavascript.md)
 
+- [jQuery](https://github.com/wowba/TIL/blob/main/JavaScript/jQuery.md)
+
+- [AJAX](https://github.com/wowba/TIL/blob/main/JavaScript/ajax.md)
+
 - [What Is NodeJS?](https://github.com/wowba/TIL/blob/main/JavaScript/nodejs.md)
 
 - [NPM](https://github.com/wowba/TIL/blob/main/JavaScript/npm.md)
@@ -56,7 +60,11 @@
 
 - [mvp.css](https://github.com/wowba/TIL/blob/main/CSS/mvp.css.md)
 
--[bootstrap](https://github.com/wowba/TIL/blob/main/CSS/bootstrap.md)
+- [bootstrap](https://github.com/wowba/TIL/blob/main/CSS/bootstrap.md)
+
+## Python
+
+- [파이썬 기본 문법](https://github.com/wowba/TIL/blob/main/python/pythonBasic.md)
 
 ## ETC
 
