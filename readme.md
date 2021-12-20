@@ -66,6 +66,8 @@
 
 - [파이썬 기본 문법](https://github.com/wowba/TIL/blob/main/python/pythonBasic.md)
 
+- [Flask](https://github.com/wowba/TIL/blob/main/python/flask.md)
+
 ## ETC
 
 - [fsevent Error](https://velog.io/@lisasu/%EC%9C%88%EB%8F%84%EC%9A%B0-npm-install-fsevents-%EC%98%A4%EB%A5%98%EB%AC%B8%EC%A0%9C)
