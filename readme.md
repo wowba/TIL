@@ -2,7 +2,7 @@
 
 ## JAVA
 
-- [JAVA 기초](<(https://github.com/wowba/TIL/blob/main/JavaScript/javaBasic.md)>)
+- [생활코딩 JAVA1](https://github.com/wowba/TIL/blob/main/JAVA/javaBasic.md)
 
 ## Node.JS
 
@@ -73,6 +73,8 @@
 - [Flask](https://github.com/wowba/TIL/blob/main/python/flask.md)
 
 ## ETC
+
+- [생활코딩 GIT](https://github.com/wowba/TIL/blob/main/ETC/git.md)
 
 - [fsevent Error](https://velog.io/@lisasu/%EC%9C%88%EB%8F%84%EC%9A%B0-npm-install-fsevents-%EC%98%A4%EB%A5%98%EB%AC%B8%EC%A0%9C)
 
