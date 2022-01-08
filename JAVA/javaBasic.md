@@ -24,7 +24,7 @@ project layout은 폴더의 구조를 결정하는 방법이다.
 
 소스 폴더와 컴파일된 파일의 폴더를 따로 만들수도 있고 같이 한 폴더에 둘 수도 있다.
 
-## 파일 생성
+## Hello World
 
 HelloWorldApp.java 라는 파일을 만들었으면 다음과 같이 입력한다.
 
@@ -43,3 +43,80 @@ public class HelloWorldApp{
 이 파일을 저장하면 동일한 이름의 class 파일이 폴더에 생성된다. 이 파일은 컴파일을 거쳐서 만들어지고 열어보면 깨진 텍스트로 나온다.
 
 사람이 읽기위해 있는것이 아닌, 컴퓨터를 위한 파일이다.
+
+## Data Type
+
+다양한 데이터 타입들을 자바로 사용 가능하다.
+
+데이터 타입을 나누는 이유는 각각의 데이터마다 데이터의 특성에 맞는 처리방식이 존재하기 때문.
+
+예를들어 숫자는 다양한 수학적 처리가 가능하고 문자는 문자의 추가, 검색 등의 작업이 가능하다. 이를 위해 데이터 타입들을 잘 정리해야 한다.
+
+`팁 sysout을 적고 ctrl + space 하면 자동으로 System.out.println(); 을 완성한다.`
+
+```
+public class DataType {
+	public static void main(String[] args) {
+		System.out.println(6); // Number
+
+		System.out.println("6"); // String
+
+		System.out.println(6 + 6); // 12
+
+		System.out.println(6*6); // 36
+
+		System.out.println("6"+"6"); // 66
+
+		System.out.println("1111".length()); // 4
+
+		System.out.println("1111".length());
+	}
+}
+```
+
+## 숫자와 연산
+
+Math 를 사용해 다양한 연산을 할 수 있다.
+
+```
+public class Number {
+
+	public static void main(String[] args) {
+		// Operator
+		System.out.println(6 + 2); // 8
+		System.out.println(6 - 2); // 4
+		System.out.println(6 * 2); // 12
+		System.out.println(6 / 2); // 3
+
+		System.out.println(Math.PI); // 3.141592653589793
+		System.out.println(Math.floor(Math.PI) ); // 3.0
+		System.out.println(Math.ceil(Math.PI) ); // 4.0
+	}
+}
+```
+
+## 문자열의 표현
+
+String과 Character를 구별 잘 해야한다.
+
+```
+public class StringApp {
+
+	public static void main(String[] args) {
+
+		// Character VS String
+		System.out.println("Hello World"); // String // ""로 표현한다.
+		System.out.println('H'); // Character //  ''로 표현한다.
+		System.out.println("H"); // String
+
+		System.out.println("Hello "
+				+ "World"); // Hello World
+
+		// new line = \n
+		System.out.println("Hello \nWorld"); // Hello
+											 // World
+		// escape
+		System.out.println("Hello \"World\""); // Hello "World"
+	}
+}
+```
