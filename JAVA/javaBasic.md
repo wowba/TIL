@@ -11,6 +11,7 @@ JDK, Java Develpoement Kit 은 자바를 사용해 개발할 때 여러가지 �
 개발자용 프로그램이다. 보통 Oracle이라는 회사에서 배포하는 JAVA를 사용한다.
 
 JAVA SE Developement KIT을 흔히 사용한다. 윈도우용을 쓰자!
+`설치 후 Path 설정 꼭 해주기`
 
 또한 강의에선 개발환경으로 Eclipise를 사용한다.
 
@@ -98,6 +99,7 @@ public class Number {
 ## 문자열의 표현
 
 String과 Character를 구별 잘 해야한다.
+Character는 단 한 글자만 가질 수 있다.
 
 ```
 public class StringApp {
@@ -130,6 +132,61 @@ public class StringOperation {
 
 		System.out.println("Hello World".length()); // 11
 		System.out.println("Hello, [[[name]]] ... bye.".replace("[[[name]]]", "duru")); // 이름 바꾸기
+	}
+
+}
+```
+
+## 변수
+
+변수는 그 값이 변할 수 있는것이라고 수학에서 정의한다.
+
+자바에서는 해당 데이터가 어떤 값을 받는지 정확하게 명시하지 않으면 오류가 나온다.
+
+```
+public class variable {
+
+	public static void main(String[] args) {
+		int a = 1; // Number -> integer (정수)
+		System.out.println(a);
+
+		double b = 1.1; // real number -> double
+		System.out.println(b);
+
+		String c = "Hello World"; // 문자열
+		System.out.println(c);
+
+		String name = "wowba";
+		System.out.println("Hello, "+name+"...");
+
+		double VAT = 10.0;
+		System.out.println(VAT);
+	}
+}
+
+```
+
+## 변수 타입 바꾸기 / Casting
+
+자바는 데이터 타입을 엄격히 엄수하기 때문에 항상 잘 확인하자.
+
+```
+public class casting {
+
+	public static void main(String[] args) {
+
+		double a = 1.1;
+		System.out.println(a);
+		double b = 1;
+		System.out.println(b);
+		double b2 = (double) 1;
+		System.out.println(b2);
+
+		int c = (int) 1.1; // 강제로 손실을 내서 1.1을 1.0으로 바꾼다. 꼭 명시적으로 해야함!
+		System.out.println(c);
+
+		String str = Integer.toString(1);
+		System.out.println(str.getClass()); // 타입을 볼 수 있음.
 	}
 
 }

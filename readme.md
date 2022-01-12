@@ -2,7 +2,9 @@
 
 ## JAVA
 
-- [생활코딩 JAVA1](https://github.com/wowba/TIL/blob/main/JAVA/javaBasic.md)
+- [생활코딩 JAVA 1](https://github.com/wowba/TIL/blob/main/JAVA/javaBasic.md)
+
+- [생활코딩 JAVA 2](https://github.com/wowba/TIL/blob/main/JAVA/javaBasic2.md)
 
 ## Node.JS
 
