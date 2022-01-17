@@ -12,6 +12,14 @@
 
 - [생활코딩 JAVA 객체 지향 프로그래밍](https://github.com/wowba/TIL/blob/main/JAVA/javaObject.md)
 
+- [생활코딩 JAVA 상속](https://github.com/wowba/TIL/blob/main/JAVA/javaInheritance.md)
+
+## JAVA Spring
+
+## Data Structure & Algorithm
+
+- [어서와! 자료구조와 알고리즘은 처음이지 by Programmers](https://github.com/wowba/TIL/blob/main/data_structure&algorithm/javaInheritance.md)
+
 ## Node.JS
 
 - [자바스크립트 기본 문법](https://github.com/wowba/TIL/blob/main/JavaScript/basicJavascript.md)
@@ -66,6 +74,12 @@
 
 - [MongoStore](https://github.com/wowba/TIL/blob/main/mongoDB/mongoStore.md)
 
+## Python
+
+- [파이썬 기본 문법](https://github.com/wowba/TIL/blob/main/python/pythonBasic.md)
+
+- [Flask](https://github.com/wowba/TIL/blob/main/python/flask.md)
+
 ## CSS
 
 - [Reset.css](https://github.com/wowba/TIL/blob/main/CSS/reset.css.md)
@@ -73,12 +87,6 @@
 - [mvp.css](https://github.com/wowba/TIL/blob/main/CSS/mvp.css.md)
 
 - [bootstrap](https://github.com/wowba/TIL/blob/main/CSS/bootstrap.md)
-
-## Python
-
-- [파이썬 기본 문법](https://github.com/wowba/TIL/blob/main/python/pythonBasic.md)
-
-- [Flask](https://github.com/wowba/TIL/blob/main/python/flask.md)
 
 ## ETC
 
