@@ -18,7 +18,7 @@
 
 ## Data Structure & Algorithm
 
-- [어서와! 자료구조와 알고리즘은 처음이지 by Programmers](https://github.com/wowba/TIL/blob/main/data_structure&algorithm/javaInheritance.md)
+- [어서와! 자료구조와 알고리즘은 처음이지 by Programmers](https://github.com/wowba/TIL/blob/main/data_structure&algorithm/programmers1.md)
 
 ## Node.JS
 
