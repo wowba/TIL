@@ -9,6 +9,139 @@
 결국 해결하고자 하는 문제에 따라 최적의 해법은 서로 다름!
 --> 이 선택을 어떻게 해야 하느냐를 알기 위해 자료구조를 이해해야함.
 
+## 2강: 선형 배열
+
+파이썬은 배열을 구현하는데 리스트를 활용할 수 있다!
+
+파이썬의 리스트는 다른 언어의 배열보다 좀 더 융통성있는 구조를 가진다.
+
+배열은 원소들을 순서대로 늘어놓은 것이다. 각각의 원소는 0부터 시작하는 index를 가진다.
+
+특히, 파이썬의 리스트는 인덱스에 음수를 부여하면 뒤에서부터 시작한다.
+
+## 3강: 배열의 정렬 / 탐색
+
+리스트 정렬 함수
+sorted() - 내장함수 이며 정렬된 새로운 리스트 반환함.
+sort() - 리스트의 method. 해당 리스트를 정렬하며 반환값은 없음.
+
+길이 순서대로 정렬
+
+```
+L = ['abcd','xyz','spam']
+sorted(L, key=lambda x: len(x))
+L = ['xyz', 'abcd', 'spam']
+```
+
+키를 지정해서 정렬하기
+
+```
+L = [{'name':'John','score':83},{'name':'Paul','score':92}]
+L.sort(key=lambda x: x['score'], reverse=True) -> 점수 순으로 정렬
+L.sort(key=lambda x: x['name']) -> 이름 순으로 정렬
+```
+
+탐색 알고리즘 - 선형 탐색 / 이진 탐색
+선형 탐색은 모든 원소 하나하나 확인해간다.
+최악의 경우는 모든 원소를 확인할 때. `O(n)`
+
+이진 탐색은 탐색하려는 리스트가 이미 정렬되어 있는 경우에만 적용이 가능하다.
+크기 순으로 정렬되어있다는 특성을 이용하기 때문이다!
+이는 리스트를 계속 반으로 나눠가면서 일부 내용들을 제외하면서 진행한다. `O(log n)`
+
+```
+def solution(L, x):
+    lower = 0
+    upper = len(L) - 1
+    while lower <= upper:
+        middle = (lower + upper) // 2
+        if L[middle] > x:
+            upper = middle
+        elif L[middle] < x:
+            lower = middle
+        else:
+            return middle
+        if lower + 1 == upper:
+            if L[lower + 1] == x:
+                return lower + 1
+            elif L[lower] == x:
+                return lower
+            else:
+                return -1
+    return -1
+```
+
+## 4강 재귀 알고리즘 - 기초 (Recursive Algorithms)
+
+재귀함수는 하나의 함수에서 자신을 다시 호출하여 작업을 수행하는 것.
+
+재귀 함수를 호출할 때는 종결 조건이 매우 중요하다.
+
+피보나치 수열 반복문 구현
+
+```
+def solution(x):
+    if x == 0:
+        return 0
+    if x == 1:
+        return 1
+    fibo = [0,1]
+    if x >= 2:
+        for i in range(x + 1):
+            fibo.append(fibo[i]+fibo[i+1])
+    return fibo[x]
+```
+
+피보나치 순열 재귀 구현
+
+```
+def solution(x):
+    if x == 0:
+        return 0
+    if x == 1:
+        return 1
+    fibo = [0,1]
+    if x >= 2:
+        return solution(x-1) + solution(x-2)
+```
+
+## 5강 재귀 알고리즘 응용
+
+조합의 수 계산
+
+```
+from math import factorial as f
+
+def combi(n,m):
+    return f(n) / (f(m) * f(n-m))
+```
+
+조합의 수 계산 - 재귀적인 방법
+
+```
+def combi(n,m)
+    if n == m:
+        return 1
+    elif m == 0:
+        return 1
+    else:
+        return combi(n-1, m) + combi(n-1, m-1)
+
+--> 효율이 떨어지는 방법!
+```
+
+## 6강: 알고리즘의 복잡도
+
+시간 복잡도 = 문제의 크기와 이를 해결하는 데 걸리는 시간 사이의 관계
+
+공간 복잡도 = 문제의 크기와 이를 해결하는 데 필요한 메모리 공간 사이의 관계
+
+1. 선형 시간 알고리즘 - 모든 원소를 일일히 다 확인함. O(n)
+2. 로그 시간 알고리즘 - 이진 탐색 등. O(log n)
+3. 이차 시간 알고리즘 - 삽입 정렬 등. O(n²)
+   정렬 문제에 대해 병합 정렬과 같이 O(n log n)보다
+   낮은 복잡도를 가진 알고리즘은 존재할 수 없음이 증명되어 있다.
+
 ## 7강: 단일 연결 리스트 (1)
 
 추상적 자료구조 (Abstract Data Structure)는
