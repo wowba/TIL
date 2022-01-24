@@ -90,6 +90,8 @@
 
 ## ETC
 
+-[모든 개발자를 위한 HTTP 웹 기본지식](https://github.com/wowba/TIL/blob/main/ETC/http.md)
+
 - [생활코딩 GIT](https://github.com/wowba/TIL/blob/main/ETC/git.md)
 
 - [fsevent Error](https://velog.io/@lisasu/%EC%9C%88%EB%8F%84%EC%9A%B0-npm-install-fsevents-%EC%98%A4%EB%A5%98%EB%AC%B8%EC%A0%9C)
