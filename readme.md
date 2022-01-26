@@ -90,7 +90,7 @@
 
 ## ETC
 
--[모든 개발자를 위한 HTTP 웹 기본지식](https://github.com/wowba/TIL/blob/main/ETC/http.md)
+- [모든 개발자를 위한 HTTP 웹 기본지식](https://github.com/wowba/TIL/blob/main/ETC/http.md)
 
 - [생활코딩 GIT](https://github.com/wowba/TIL/blob/main/ETC/git.md)
 
