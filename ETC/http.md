@@ -226,3 +226,214 @@ TCP/IP 연결을 새로 맺을때마다 3 way handshake 시간 추가
 웹 브라우저로 사이트를 요청하면 HTML 뿐 아니라 JS, CSS 등을 전부 다운받아야 한다.
 
 하지만 지금은 HTTP 지속 연결(Persistent Connection)로 문제를 해결하며, HTTP/2, 3 에서 더 많은 최적화가 이루어졌다.
+
+### HTTP 메세지
+
+HTTP 메세지는 요청, 응답 2가지가 있는데 구조는 각각이 조금씩 다르다.
+
+시작라인 / 헤더 / 공백라인 / message body 이렇게 있으며 공식 스펙은 다음과 같다.
+
+```
+HTTP-message   = start-line
+                 *( header-field CRLF )
+                 CRLF  <-- 공백 한줄
+                 [ message-body ]
+```
+
+- start-line
+  start-line은 `request-line` / `status-line` 두가지가 있다.
+  `request-line`(요청 메세지)는 method SP(공백) request-target SP(공백) HTTP-version CRLF(엔터) 와 같다.
+  `status-line`(응답 메세지)는 HTTP-version SP(공백) status-code SP(공백) reason-phrase CRLF(엔터) 와 같다.
+
+- HTTP 헤더
+  `header-field` = field-name ":" OWS field-value OWS ( OWS : 띄어쓰기 허용 )
+  field-name은 대소문자 구분이 없다.
+
+  HTTP 헤더는 HTTP 전송에 필요한 모든 부가정보가 들어있다. (메시지 바디 내용, 메시지 바디 크기, 압축, 인증, 요청 클라이언트 등등...)
+  또한 필요시 임의의 헤더 추가가 가능하다.
+
+- HTTP 메시지 바디
+  실제 전송할 데이터가 들어있다.
+  HTML 문서, 이미지, 영상, JSON 등 byte로 표현할 수 있는 모든 데이터 전송 가능
+
+- HTTP의 단순함과 확장 가능성
+  HTTP 메시지도 매우 단순하고 스펙도 읽어볼 만 하며,
+  크게 성공하는 표준 기술은 단순하지만 확장 가능한 기술임을 알 수 있다.
+
+# HTTP Method
+
+### HTTP Method 종류
+
+`주요 Method`
+
+- GET: 리스소 조회
+  서버에 전달하고 싶은 데이터는 query를 통해서 전달한다.
+  메세지 바디를 사용해서 데이터를 전송할 수 있지만, 지원하지 않는 곳이 많다.
+
+- POST: 요청 데이터 처리, 주로 등록에 사용
+  메시지 바디를 통해 서버로 요청 데이터를 전달하고, 서버는 요청 데이터를 처리한다.
+  즉, 메시지 바디를 통해 들어온 데이터를 처리하는 모든 기능을 수행한다.
+  주로 전달된 데이터로 신규 리소스 등록, 프로세스 처리에 사용한다.
+  또한 다른 method로 처리하기 애매한 경우에도 사용한다.
+- PUT: 기존 리소스를 `완전히 대체`, 해당 리소스가 없으면 `생성`
+  put은 쉽게 얘기해서 기존 파일을 덮어버리거나 새로 생성하는 method이다.
+  또한 클라이언트가 리소스 위치를 알고 URI를 지정하는데, 이 부분에서 POST와는 다르다.
+  기존 리소스를 완전히 지워버리고 대체하기 때문에 사용에 주의하자.
+
+- PATCH: 리소스 부분 변경
+  기존 리소스의 일부 부분만 변경이 가능해 리소스 업데이트 등에 사용할 수 있다
+  서버가 PATCH를 이해하지 못하는 경우 POST를 쓰면 된다.
+
+- DELETE: 리소스 삭제
+  기존에 있던 리소스를 삭제한다.
+  `기타 Method`
+
+- HEAD: GET과 동일하지만 메시지 부분을 제외하고 상태 줄, 헤더만 변환
+- OPTIONS: 대상 리소스에 대한 통신 가능옵션을 설명 (주로 CORS에서 사용)
+- CONNECT: 대상 자원으로 식별되는 서버에 대한 터널을 설정 / `거의 사용하지 않음`
+- TRACE: 대상 리소스에 대한 경로를 따라 메시지 루프백 테스트를 수행 / `거의 사용하지 않음`
+
+### HTTP Method의 속성
+
+- 안전(Safe)
+  호출해도 대상 리소스를 변경하지 않는다.
+
+- 멱등(Iempotent)
+  몇번을 호출하던 결과가 똑같이 나와야 한다.
+  멱등 method 로는
+  GET - 몇번을 호출하던 같은 결과 조회,
+  PUT - 결과를 대체. 같은 요청을 여러번 해도 최종 결과는 같음,
+  DELETE - 결과를 삭제한다. 같은 요청을 여러번 해도 삭제된 결과는 똑같다.
+
+  멱등의 경우에는 자동 복구 메커니즘,
+  서버가 Timeout 등으로 정상 응답을 못주었을 때, 클라이언트가 같은 요청을 다시 해도 되는가? 의 판단 근거.
+  `멱등은 외부 요인으로 중간에 리소스가 변경되는것 까지는 고려하지 않는다.`
+
+- 캐시 가능(Cacheable)
+  응답 결과 리소스를 캐시로 저장해 사용할 수 있는가?
+  GET, HEAD, POST, PATCH 캐시 가능하지만, 실제로는 GET, HEAD 정도만 캐시로 사용한다.
+
+### HTTP API 리소스
+
+좋은 URI 설계는 `리소스 식별`을 최우선으로 두고 설계하는 것이다.
+회원 관리 시스템의 경우, 회원이라는 개념 자체가 `리소스`이다.
+즉, 회원을 등록하고 수정하고 조회하는것을 URI에 모두 배제하여 `회원`이라는 `리소스`만 식별하게 한다.
+--> `회원 리소스를 URI 에 매핑`, 그 뒤는 method로 기능을 분류한다!!
+
+회원 관리 API URI 설계 ( Uniform Resource Identifier ) / 리소스 = 회원 / 행위 = 조회, 등록, 삭제, 변경 (method)
+
+# HTTP method 활용
+
+### 클라이언트에서 서버로 데이터 전송
+
+데이터 전달 방식은 크게 2가지가 있다.
+
+1. 쿼리 파라미터를 통한 데이터 전송
+
+- GET
+- 주로 정렬 필터(검색어)
+
+2. 메시지 바디를 통한 데이터 전송
+
+- POST, PUT, PATCH
+- 회원가입, 상품주문, 리소스 등록, 리소스 변경 등.
+
+보통 데이터 전송에선 크게 4가지 상황이 있다.
+
+1. 정적 데이터 조회 - 쿼리 파라미터 미사용 / GET
+   보통 일반적으로 정적 데이터는 쿼리 파라미터 없이 리소스 경로로 단순하게 조회 가능
+
+2. 동적 데이터 조회 - 쿼리 파라미터 사용 / GET
+   주로 검색, 게시판 목록에서 정렬 필터
+   필터, 조회 결과를 정렬하는 정렬 조건에 주로 사용한다.
+   GET은 쿼리 파라미터를 사용해서 데이터를 전달한다.
+
+3. HTML Form 데이터 전송 / POST
+   주로 회원가입, 상품 주문, 데이터 변경 등 정보 보내기, 수정, 추가 등에 사용.
+
+/ multipart/form-data
+정보 뿐만 아니라 다양한 파일(바이너리 데이터)들을 넣어서 보낼 수 있음.
+다른 종류의 여러 파일들과 폼의 내용 함께 전송 가능!!
+
+4. HTTP API 데이터 전송
+   주로 회원가입, 상품 주문, 데이터 변경 등 정보 보내기, 수정, 추가 등
+   서버 TO 서버 전송 (백엔드 시스템 통신)
+   앱 클라이언트 - 아이폰/안드로이드
+   웹 클라이언트 - Form 대신 자바 스크립트를 통한 통신 (React, VueJs 같은 웹 클라이언트와 API 통신)
+
+### HTTP API 설계 예시
+
+1. HTTP API 컬렉션 / POST 기반 등록 (ex: 회원 관리 API 제공)
+
+- 회원 목록 /members -> GET
+- 회원 등록 /members -> POST
+- 회원 조회 /members/{id} -> GET
+- 회원 수정 /members/{id} -> PATCH, PUT(게시글 수정 등 제한적인 상황), POST
+- 회원 삭제 /members/{id} -> DELETE
+
+클라이언트는 등록될 리소스의 URI 를 모른다.
+
+- 회원 등록 /members -> POST
+- POST /members
+
+서버가 새로 등록된 리소스 URI를 생성해준다.
+
+- HTTP/1.1 201 Created
+  Location: /members/100
+
+이 형태를 컬렉션 이라고 한다.
+
+- 서버가 관리하는 리소스 디렉토리
+- 서버가 리소스의 URI를 생성하고 관리
+- 여기서 컬렉션은 /members
+
+2. 파일 관리 시스템 API 설계 / PUT 기반 등록
+
+- 파일 목록 /files -> GET
+- 파일 조회 /files/{filename} -> GET
+- 파일 등록 /files/{filename} -> PUT
+- 파일 삭제 /files/{filename} -> DELETE
+- 파일 대량 등록 /files -> POST
+
+클라이언트가 리소스 URI를 알고 있어야 한다 (POST와 PUT의 큰 차이!!!)
+
+- 파일 등록 /files/{filename} -> PUT
+- PUT /files/filename.jpg
+
+클라이언트가 직접 리소스의 URI를 지정한다. PUT 기반은 서버가 만들어주지 않는다.
+
+이 형태를 스토어 라고 한다.
+
+- 클라이언트가 관리하는 리소스 저장소
+- 클라이언트가 리소스의 URI를 알고 관리
+- 여기서 스토어는 /files
+
+`대부분의 실무에서는 POST를 사용한다.`
+
+3. HTML FORM 사용
+
+- HTML FORM은 GET, POST 만 지원한다. -> 제약이 존재!
+- AJAX같은 기술을 사용해서 해결 가능
+
+- 회원 목록 /members -> GET
+- 회원 등록 폼 /members/new -> GET
+- 회원 등록 /members/new -> POST
+- 회원 조회 /members/{id} -> GET
+- 회원 수정 폼 /members/{id}/edit -> GET
+- 회원 등록 /members/{id}/edit -> POST
+- 회원 삭제 /members/{id}/delete -> POST --> DELETE를 사용 못하기에 컨트롤 URI 를 사용해야 한다.
+
+컨트롤 URI
+
+- HTML FORM은 GET, POST만 지원하므로 제약이 존재한다.
+- 이런 제약을 해결하기 위해 동사로 된 리소스 경로 사용
+- POST의 /new, /edit, /delete 등이 컨트롤 URI
+
+### 참고하면 좋은 URI 설계 개념
+
+https://restfulapi.net/resource-naming 참고하기!!
+
+1. 문서
+2. 컬렉션
+3. 스토어
+4. 컨트롤러
