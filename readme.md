@@ -16,7 +16,7 @@
 
 ## JAVA Spring
 
-- [스프링 입문, 코드로 배우는 스프링 부트 by 김영한](https://github.com/wowba/TIL/blob/main/JAVA_SPRING/spring_start.md)
+- [스프링 입문, 코드로 배우는 스프링 부트 by 김영한](https://github.com/wowba/TIL/blob/main/JAVA_Spring/spring_start.md)
 
 ## Data Structure & Algorithm
 
