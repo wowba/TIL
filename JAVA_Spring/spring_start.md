@@ -2,6 +2,10 @@
 
 김영한님의 스프링 입문 강좌에 기초하는 repo.
 
+[스프링 Boot Document](https://docs.spring.io/spring-boot/docs/current/reference/html/)
+
+# 프로젝트 환경설정
+
 ### [스프링 initializr](https://start.spring.io/)
 
 이 사이트는 스프링 부트 기반으로 스프링 관련 프로젝트를 만들어주는 사이트이다.
@@ -38,7 +42,7 @@
 
 - src
 
-  - main: java, resourecs(자바 파일을 제외한 나머지가 들어있다!)
+  - main: java, resourecs(자바 파일을 제외한 나머지가 이 폴더에 들어있다!)
   - test: 테스트 코드들과 관련된 소스들.
     요즘 개발 트렌드에서는 테스트 코드가 정말 중요하다!
 
@@ -64,3 +68,103 @@
 가 나오면 해당 포트 `localhost:8080` 로 이동하면 whitelabel 에러가 나오고,
 
 이렇게 되면 프로젝트 세팅 성공이다.
+
+- 인텔리제이 gradle 세팅
+  setting - gradle(검색)으로 들어가서 `Build and run using`과 `Run tests using`의 `gradle` 설정을 인텔리제이로 바꿔주면 인텔리제이에서 바로 자바로 돌려 속도가 더 빨라진다.
+
+### 라이브러리 살펴보기
+
+External Libraries에 들어가보면 수많은 라이브러리들이 존재한다.
+
+처음에 [스프링 initializr](https://start.spring.io/) 에서 정한
+
+Maven 또는 Gradle와 같은 빌드 툴은 `의존 관계`를 다 관리해준다.
+
+예로 spring-boot-starter-web 과 같은 라이브러리를 설치하면 의존 관계에 있는
+
+모든 라이브러리를 따라 가져온다.
+
+예전에는 하나하나 다 설치해줬다면, 지금은 그냥 라이브러리를 하나 빌드해서 웹서버에
+
+올리면 간편하게 끝이 난다.
+
+```
+기본 설치시 생기는 라이브러리
+
+스프링 부트 라이브러리
+spring-boot-starter-web
+spring-boot-starter-tomcat: 톰캣 (웹서버)
+spring-webmvc: 스프링 웹 MVC
+spring-boot-starter-thymeleaf: 타임리프 템플릿 엔진(View)
+spring-boot-starter(공통): 스프링 부트 + 스프링 코어 + 로깅
+spring-boot
+spring-core
+spring-boot-starter-logging
+logback, slf4j
+
+테스트 라이브러리
+spring-boot-starter-test
+junit: 테스트 프레임워크  -> 5.0으로 넘어가는 중!
+mockito: 목 라이브러리
+assertj: 테스트 코드를 좀 더 편하게 작성하게 도와주는 라이브러리
+spring-test: 스프링 통합 테스트 지원
+```
+
+- 로깅
+
+현업에서는 println을 통해 띄우지 않고 logging을 쓰는데, 특정 에러들을 모아보는 등의 행위가 가능하다.
+
+인텔리제이의 우측에 Gradle - Dependencies를 타고 들어가면 starter를 타고 들어갈 수 있는데, 거기서 이미 라이브러리가 설치되있음을 확인할 수 있다.
+
+로그백, slf4j 2개가 있는데, 요즘에는 이 두 라이브러리를 주로 사용한다.
+
+### View 환경설정
+
+스프링은 resources/static/ 폴더에 index.html 파일을 넣으면
+
+해당 파일을 Welcome Page로 인식한다.
+
+이때 내가 원하는 template을 controller를 통해 띄우고 싶으면 다음과 같이 하자.
+
+1. 메인 어플리케이션 폴더에 controller 라는 이름의 패키지 폴더를 만든다
+
+2. 다음과 같은 파일을 만든다
+
+```
+package hello.hellospring.controller; -> 패키지 이름
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller  -> 컨트롤러 인식
+public class HelloController {  -> 파일 이름
+
+    @GetMapping("hello")
+    public String hello(Model model){
+        model.addAttribute("data","hello!!!"); -> 변수에 넣을 정보 전달하기
+        return "hello";  -> hello 라는 이름의 파일 렌더링
+    }
+}
+```
+
+3. template 폴더에 hello.html 파일을 만들어준다.
+   `resources/templates/hello.html`
+
+```
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">  -> 템플릿 엔진
+<head>
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<p th:text="'안녕하세요. ' + ${data}" >안녕하세요. 손님</p>
+</body>
+</html>
+```
+
+4. 이제 서버를 키고 주소로 이동하면 렌더된 html을 볼 수 있다.
+   `이때, spring-boot-devtools 라이브러리를 추가하면, html 파일을 컴파일만 해주면 서버 재시작 없이 View 파일 변경이 가능하다.`
+
+### 빌드하고 실행하기
