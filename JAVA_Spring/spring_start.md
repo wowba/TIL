@@ -1,6 +1,6 @@
 ## 목차
 
-1. [프로젝트 환경설정](#1.-프로젝트-환경설정)
+1. [프로젝트 환경설정](#1.프로젝트-환경설정)
 
 # 스프링 입문 - 코드로 배우는 스프링 부트
 
@@ -8,7 +8,7 @@
 
 [스프링 Boot Document](https://docs.spring.io/spring-boot/docs/current/reference/html/)
 
-# 1. 프로젝트 환경설정
+# 1.프로젝트 환경설정
 
 ### [스프링 initializr](https://start.spring.io/)
 

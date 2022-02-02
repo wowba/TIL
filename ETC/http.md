@@ -7,7 +7,7 @@
 5. [HTTP method 활용](#HTTP-method-활용)
 6. [HTTP 상태코드](#HTTP-상태코드)
 7. [HTTP 헤더 1](#HTTP-헤더-1)
-8. [HTTP 헤더 2 캐시와 조건부 요청](#-HTTP-헤더-2-캐시와-조건부-요청)
+8. [HTTP 헤더 2 캐시와 조건부 요청](#HTTP-헤더-2-캐시와-조건부-요청)
 
 # HTTP
 
