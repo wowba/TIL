@@ -2,7 +2,9 @@
 
 ## JAVA
 
-- [생활코딩 JAVA](https://github.com/wowba/TIL/blob/main/JAVA/javaBasic.md)
+- [생활코딩 JAVA Start](https://github.com/wowba/TIL/blob/main/JAVA/javaBasic.md)
+
+- [프로그래머스 JAVA Review](https://github.com/wowba/TIL/blob/main/JAVA/programmersJava.md)
 
 ## JAVA Spring
 
