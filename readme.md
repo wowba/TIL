@@ -2,17 +2,7 @@
 
 ## JAVA
 
-- [생활코딩 JAVA 1](https://github.com/wowba/TIL/blob/main/JAVA/javaBasic.md)
-
-- [생활코딩 JAVA 제어문](https://github.com/wowba/TIL/blob/main/JAVA/javaBasic2.md)
-
-- [생활코딩 JAVA method](https://github.com/wowba/TIL/blob/main/JAVA/javaMethod.md)
-
-- [생활코딩 JAVA Exception](https://github.com/wowba/TIL/blob/main/JAVA/javaException.md)
-
-- [생활코딩 JAVA 객체 지향 프로그래밍](https://github.com/wowba/TIL/blob/main/JAVA/javaObject.md)
-
-- [생활코딩 JAVA 상속](https://github.com/wowba/TIL/blob/main/JAVA/javaInheritance.md)
+- [생활코딩 JAVA](https://github.com/wowba/TIL/blob/main/JAVA/javaBasic.md)
 
 ## JAVA Spring
 
