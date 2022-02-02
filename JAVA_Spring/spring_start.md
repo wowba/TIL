@@ -12,7 +12,7 @@
 
 # 1장 프로젝트 환경설정
 
-### [스프링 initializr](https://start.spring.io/)
+## [스프링 initializr](https://start.spring.io/)
 
 이 사이트는 스프링 부트 기반으로 스프링 관련 프로젝트를 만들어주는 사이트이다.
 
@@ -44,7 +44,7 @@
 
 다운받은 압축 파일을 풀고 인텔리제이에서 build.gradle 파일을 실행하자!
 
-### 구조 설명 및 프로젝트 시작
+## 구조 설명 및 프로젝트 시작
 
 - gradle
   gradle 관련 파일이 들어있는 폴더
@@ -83,7 +83,7 @@
 - 인텔리제이 gradle 세팅
   setting - gradle(검색)으로 들어가서 `Build and run using`과 `Run tests using`의 `gradle` 설정을 인텔리제이로 바꿔주면 인텔리제이에서 바로 자바로 돌려 속도가 더 빨라진다.
 
-### 라이브러리 살펴보기
+## 라이브러리 살펴보기
 
 External Libraries에 들어가보면 수많은 라이브러리들이 존재한다.
 
@@ -127,7 +127,7 @@ spring-test: 스프링 통합 테스트 지원
 
 로그백, slf4j 2개가 있는데, 요즘에는 이 두 라이브러리를 주로 사용한다.
 
-### View 환경설정
+## View 환경설정
 
 스프링은 resources/static/ 폴더에 index.html 파일을 넣으면
 
@@ -180,7 +180,7 @@ public class HelloController {  -> 파일 이름
 4. 이제 서버를 키고 주소로 이동하면 렌더된 html을 볼 수 있다.
    `이때, spring-boot-devtools 라이브러리를 추가하면, html 파일을 컴파일만 해주면 서버 재시작 없이 View 파일 변경이 가능하다.`
 
-### 빌드하고 실행하기
+## 빌드하고 실행하기
 
 빌드는 실제 실행할 수 있는 파일을 만드는 것이다.
 `빌드를 하기 전에 반드시 실행하고 있는 스프링 어플리케이션을 중지!!`
@@ -197,7 +197,7 @@ public class HelloController {  -> 파일 이름
 
 # 2장 스프링 웹 개발 기초
 
-### 정적 컨텐츠
+## 정적 컨텐츠
 
 서버에서 파일을 웹브라우저에 `그대로` 내려주는 방식.
 
@@ -207,7 +207,7 @@ public class HelloController {  -> 파일 이름
 4. 만약 없다면 resources/static/hello-static.html 을 찾는다
 5. 있다면 웹 브라우저에 반환해준다.
 
-### MVC와 템플릿 엔진
+## MVC와 템플릿 엔진
 
 - MVC 의미
 
@@ -252,7 +252,7 @@ model.addAttribute의 value에 값이 넘어가게 되는것.
 
 `중요한건, modelAttribute에 Value를 controller에서 String 타입으로 직접 넣어줘도 주소창에 입력할 때 쿼리의 name을 입력하지 않으면 에러가 나온다.`
 
-### API 방식
+## API 방식
 
 @ResponseBody -> html의 body 부분에 직접 데이터를 넣어주겠다!
 
