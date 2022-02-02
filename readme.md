@@ -80,16 +80,6 @@
 
 - [파이썬 기본 문법](https://github.com/wowba/TIL/blob/main/python/pythonBasic.md)
 
-- [Flask](https://github.com/wowba/TIL/blob/main/python/flask.md)
-
-## CSS
-
-- [Reset.css](https://github.com/wowba/TIL/blob/main/CSS/reset.css.md)
-
-- [mvp.css](https://github.com/wowba/TIL/blob/main/CSS/mvp.css.md)
-
-- [bootstrap](https://github.com/wowba/TIL/blob/main/CSS/bootstrap.md)
-
 ## ETC
 
 - [모든 개발자를 위한 HTTP 웹 기본지식](https://github.com/wowba/TIL/blob/main/ETC/http.md)
