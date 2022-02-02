@@ -1,3 +1,7 @@
+## 목차
+
+1. [프로젝트 환경설정](#프로젝트-환경설정)
+
 # 스프링 입문 - 코드로 배우는 스프링 부트
 
 김영한님의 스프링 입문 강좌에 기초하는 repo.
@@ -140,10 +144,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller  -> 컨트롤러 인식
 public class HelloController {  -> 파일 이름
 
-    @GetMapping("hello")
+    @GetMapping("hello") -> hello 라는 url 인식!
     public String hello(Model model){
         model.addAttribute("data","hello!!!"); -> 변수에 넣을 정보 전달하기
-        return "hello";  -> hello 라는 이름의 파일 렌더링
+        return "hello";  -> hello 라는 이름의 파일 렌더링, 유로버전은 ctrl + click시 해당 html 파일로 이동한다.
     }
 }
 ```
@@ -168,3 +172,16 @@ public class HelloController {  -> 파일 이름
    `이때, spring-boot-devtools 라이브러리를 추가하면, html 파일을 컴파일만 해주면 서버 재시작 없이 View 파일 변경이 가능하다.`
 
 ### 빌드하고 실행하기
+
+빌드는 실제 실행할 수 있는 파일을 만드는 것이다.
+`빌드를 하기 전에 반드시 실행하고 있는 스프링 어플리케이션을 중지!!`
+
+본인은 인텔리제이 에서 Terminal - Git Bash를 사용했다.
+
+1. 프로젝트 폴더에서 ./gradlew build -> 빌드 폴더,파일 생성
+2. cd build/libs -> jar파일 위치로 이동
+3. java -jar hello-spring-0.0.1-SNAPSHOT.jar -> 콘솔에 입력시 스프링 실행
+
+만약 build 폴더를 초기화 하고 싶다면 다시 프로젝트 폴더로 돌아와서 다음을 입력한다.
+
+1. ./gradlew clean
