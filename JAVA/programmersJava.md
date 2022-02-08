@@ -10,6 +10,8 @@
 5. [클래스와 객체](#5장-클래스와-객체)
 6. [클래스 다듬기](#6장-클래스-다듬기)
 7. [상속](#7장-상속)
+8. [인터페이스와 다른 형식의 클래스](#8장-인터페이스와-다른-형식의-클래스)
+9. [예외 처리](#9장-예외-처리)
 
 # 1장 인텔리제이 시작하기
 
@@ -842,10 +844,496 @@ public class Car{
 
 패키지를 사용함으로써 클래스들이 필요할 때만 사용될 수 있도록 하고, 클래스를 패키지 이름과 함께 계층적인 형태로 사용함으로써
 
-다른 그룹에 속한 클래스와 발생할 수 있는 클래스 이름간의 충돌을 막아줌으로 클래스의 관리를 편하게 해준다.
+다른 그룹에 속한 클래스와 발생할 수 있는 클래스 이름간의 충돌을 막아줘 클래스의 관리를 편하게 해준다.
 
 # 7장 상속
 
 ## 상속
 
 상속이란? 부모가 가진것을 자식에게 물려주는것을 의미한다.
+
+public class 자식클래스 extends 부모클래스
+
+위와 같이 불러올 수 있다.
+
+- 부모 클래스
+
+```
+public class car {
+    public void run(){
+        System.out.println("달려");
+    }
+}
+```
+
+- 자식 클래스
+
+```
+public class bus extends car{
+    public void clark(){
+        System.out.println("빵빵");
+    }
+}
+```
+
+- 클래스 불러오기
+
+```
+public class testBus {
+    public static void main(String[] args) {
+        bus bus = new bus();
+        bus.run(); // "달려"
+        bus.clark(); // "빵삥"
+    }
+}
+```
+
+## 캡슐화
+
+클래스는 필드와 메소드를 가지는데, 해당 클래스와 관련된 내용을 가지고 있어야 한다.
+
+이렇게 관련된 내용을 모아서 가지고 있는것을 `캡슐화` 라고 한다.
+
+## 접근 제한자
+
+접근 제한자란 클래스 내에서 멤버의 접근을 제한하는 역할을 한다.
+
+- `puclic`
+
+  어떤 제한자든 접근할 수 있음을 말한다.
+
+- `protected`
+
+  같은 패키지인 경우 접근 허용, 다른 패키지라도 상속받으면 접근이 가능하다.
+
+- `default`
+
+  아무것도 쓰지 않은 경우, 자기 자신과 같은 패키지 내에서 접근 허용
+
+- `private`
+
+  자기 자신만 접근이 가능하다.
+
+## 추상 클래스
+
+추상 클래스란 구체적이지 않은 클래스를 의미한다.
+
+추상 클래스 특징
+
+- 추상 클래스는 클래스 앞에 abstract 키워드를 이용해서 정의한다.
+
+- 추상 클래스는 미완성의 추상 메소드를 포함할 수 있다.
+
+  - 추상 메소드란, 내용이 없는 메소드 이다. 즉 구현이 되지 않은 메소드이다.
+  - 추상 메소드는 리턴 타입 앞에 abstract라는 키워드를 붙여야 한다.
+
+- 추상 클래스는 인스턴스를 생성할 수 없다.
+
+추상 클래스 생성하기
+
+```
+public abstract class Bird {
+    public abstract void sing();
+    public void fly(){
+        System.out.println("날다");
+    }
+}
+```
+
+추상 클래스를 부모 클래스로 사용하기
+
+추상 클래스를 사용하려면 `@Override` 를 반드시 위에 붙여야 한다!
+
+```
+public class Duck extends Bird{
+    @Override
+    public void sing() {
+        System.out.println("꽥꽥");
+    }
+}
+```
+
+생성한 자식 클래스를 인스턴스 생성해서 사용하기
+
+```
+public class DuckTest {
+    public static void main(String[] args) {
+        Duck duck = new Duck();
+        duck.sing(); // 꽥꽥
+        duck.fly(); // 날다
+    }
+}
+```
+
+## super와 부모생성자
+
+class가 인스턴스화 될때 생성자가 실행되면서 객체의 초기화를 한다. 그 때 자신의 생성자만 실행이 되는것이 아니고, 부모의 생성자부터 실행된다.
+
+super
+
+- 자신을 가리키는 키워드가 this 라면, 부모들 가리키는 키워드는 super
+- super() 는 부모의 생성자를 의미한다.
+- 부모의 생성자를 임의로 호출하지 않으면, 부모 class의 기본 생성자가 자동으로 호출된다.
+- 아래 예제처럼 호출해보면 위에서 super()를 호출하지 않을때와 결과가 같다.
+
+## 오버라이딩
+
+오버라이딩이란 부모가 가지고 있는 메소드와 똑같은 모양의 메소드를 자식이 가지고 있는 것이다. 즉 오버라이딩이란 메소드를 재정의 하는 것이다.
+
+```
+public class Car {
+    public  void run(){
+        System.out.println("Car의 메소드");
+    }
+}
+```
+
+```
+public class Truck extends Car {
+    public void run(){
+        System.out.println("Bus의 메소드");
+    }
+}
+```
+
+```
+public class TruckTest {
+
+    public static void main(String[] args) {
+        Truck t = new Truck();
+        t.run(); // Bus의 메소드
+    }
+}
+```
+
+## 클래스 형변환
+
+부모타입으로 자식객체를 참조하게 되면 부모가 가지고 있는 메소드만 사용할 수 있다. 자식객체가 가지고 있는 메소드나 속성을 사용하고 싶다면 형변환 해야 한다.
+
+```
+public class Car {
+    public  void run(){
+        System.out.println("Car의 메소드");
+    }
+}
+```
+
+```
+public class Truck extends Car {
+    public void run(){
+        System.out.println("Bus의 메소드");
+    }
+}
+```
+
+```
+public class TruckTest {
+
+    public static void main(String[] args) {
+        Car t = new Truck();
+        t.run();
+
+        Truck truck = (Truck)t;
+        truck.run();
+        truck.clark();
+    }
+}
+```
+
+# 8장 인터페이스와 다른 형식의 클래스
+
+## 인터페이스 만들기
+
+인터페이스: 서로 관계가 없는 물체들이 상호 작용을 하기 위해서 사용하는 장치나 시스템
+
+인터페이스에서는 추상 메소드와 상수를 정의할 수 있다.
+
+```
+public interface TV {
+    public int MIN_VOLUME = 0;
+    public int MAX_VOLUME = 100;
+
+    public void turnOn();
+    public void turnOff();
+    public void changeVolume(int volume);
+    public void changeChannel(int channel);
+}
+```
+
+위의 상수는 컴파일시 자동으로 변한다
+
+```
+public static final int MAX_VOLUME = 100;
+public static final int MIN_VOLUME = 0;
+```
+
+인터페이스에서 정의된 메소드는 모두 추상 메소드이다.
+
+컴파일시 다음과 같이 변경된다.
+
+```
+public abstract void on();
+public abstract void off();
+public abstract void volume(int value);
+public abstract void channel(int number);
+```
+
+## 인터페이스 사용하기
+
+인터페이스는 사용할때 해당 인터페이스를 구현하는 클래스에서 implements 키워드를 이용한다.
+
+인텔리제이 에서는 우선 해당 인터페이스를 implements 할
+
+클래스 파일을 만든 뒤, alt + insert를 활용해 가져올 수 있다. 그러면 알아서 다 세팅해준다.
+
+추상 클래스를 가져오는 것과 동일하기 때문에 `@Override`를 꼭 사용해야 한다.
+
+```
+public class LedTV implements TV {
+
+    @Override
+    public void turnOn() {
+
+    }
+
+    @Override
+    public void turnOff() {
+
+    }
+
+    @Override
+    public void changeVolume(int volume) {
+
+    }
+
+    @Override
+    public void changeChannel(int channel) {
+
+    }
+}
+```
+
+## 인터페이스의 default method
+
+JAVA 8이 등장하면서 interface에 대한 정의가 몇 가지 변경되었다.
+
+기존에는 추상 메소드만 가질 수 있었지만,
+
+자바 8부터는 default method, static method를 가질 수 있다.
+
+- 인터페이스 만들기
+
+```
+public interface Calculator {
+    public int plus(int i, int j);
+    public int multiple(int i, int j);
+
+    default int exec(int i, int j){
+        return i + j;
+    }
+}
+```
+
+- 인터페이스를 불러오는 클래스 만들기
+
+```
+public class Cal implements Calculator{
+    @Override
+    public int plus(int i, int j) {
+        return 0;
+    }
+
+    @Override
+    public int multiple(int i, int j) {
+        return 0;
+    }
+}
+```
+
+- 생성한 클래스의 default method 사용하기
+
+```
+public class CalTest {
+    public static void main(String[] args) {
+        Calculator cal = new Cal();
+        int i = cal.exec(3,8);
+        System.out.println(i); // 11
+    }
+}
+```
+
+## 내부 클래스
+
+어느 위치에 선언하느냐에 따라서 4가지 형태가 있을 수 있다.
+
+1. 첫번째는 클래스 안에 인스턴스 변수, 즉 필드를 선언하는 위치에 선언되는 경우. 보통 `중첩클래스 혹은 인스턴스 클래스`라고 한다
+
+```
+public class InnerClass {
+    class Exam1 {
+        int value = 0;
+        public void plus(){
+            value =+ 1;
+        }
+    }
+
+    public static void main(String[] args) {
+        InnerClass t = new InnerClass();
+
+        InnerClass.Exam1 exam1 = t.new Exam1();
+
+        exam1.plus();
+        System.out.println(exam1.value); // 1
+    }
+}
+```
+
+2. 두번째는 내부 클래스가 static으로 정의된 경우, `정적 중첩 클래스 또는 static 클래스`라고 한다.
+
+필드 선언할 때 스태틱한 필드로 선언한 것과 같다. 이 경우에는 InnerExam2객체를 생성할 필요없이 new InnerExam2.Cal() 로 객체를 생성할 수 있다.
+
+```
+public class InnerClass2 {
+    static class Exam2 {
+        int value = 0;
+        public void plus(){
+            value += 1;
+    }
+}
+
+    public static void main(String[] args) {
+        InnerClass2.Exam2 exam2 = new InnerClass2.Exam2();
+        exam2.plus();
+        System.out.println(exam2.value); // 1
+    }
+}
+```
+
+3. 세번째로는 메소드 안에 클래스를 선언한 경우, 지역 중첩 클래스 또는 지역 클래스라고 한다.
+
+메소드 안에서 해당 클래스를 이용할 수 있다.
+
+```
+public class InnerClass3 {
+    public void exec(){
+        class Cal{
+            int value = 0;
+            public void plus(){
+                value += 1;
+            }
+        }
+        Cal cal = new Cal();
+        cal.plus();
+        System.out.println(cal.value);
+    }
+    public static void main(String[] args) {
+        InnerClass3 t = new InnerClass3();
+        t.exec();
+    }
+}
+```
+
+## 익명 클래스
+
+익명 중첩 클래스는 익명 클래스라고 보통 말하며, 내부 클래스이기도 하다.
+
+```
+//추상클래스 Action
+public abstract class Action{
+    public abstract void exec();
+}
+```
+
+Action을 상속받는 익명 클래스를 만들어서 사용할 수 있다.
+
+```
+public class ActionExam{
+    public static void main(String args[]){
+        Action action = new Action(){
+            public void exec(){
+                System.out.println("exec");
+            }
+        };
+        action.exec();
+    }
+}
+```
+
+# 9장 예외 처리
+
+## Exception
+
+프로그램실행중 예기치 못한 사건을 예외라고 한다. 예외 상황을 미리 예측하고 처리할 수 있는데, 이렇게 하는 것을 예외 처리라고 한다.
+
+예외처리하는 문법
+
+- 오류가 발생할 예상 부분을 try라는 블록으로 감싼 후, 발생할 오류와 관련된 Exception을 catch라는 블록에서 처리한다.
+- 오류가 발생했든 안했든 무조건 실행되는 finally라는 블록을 가질 수 있다.
+- finally블록은 생략가능하다.
+
+```
+public class Exception {
+    public static void main(String[] args) {
+        try {
+            int i = 10;
+            int j = 5;
+            int k = i / j; // j가 0일경우 예외
+            System.out.println("k : " + k);
+        } catch(ArithmeticException e) {
+            System.out.println("0으로 못나눕니다. "+e.toString());
+        }
+        System.out.println("main end!");
+    }
+}
+```
+
+## Throws
+
+throws는 예외가 발생했을때 예외를 호출한 쪽에서 처리하도록 던져준다.
+
+```
+public class Throw {
+    public static void main(String[] args) {
+        int i = 10;
+        int j = 0;
+        try {
+            int k = divide(i, j);
+            System.out.println(k);
+        } catch(ArithmeticException e){
+            System.out.println(e.toString());
+        }
+    }
+    public static int divide(int i, int j) throws ArithmeticException{
+        int k = i / j;
+        return k;
+    }
+}
+```
+
+## Throw
+
+강제로 오류를 발생시키는 throw
+
+```
+public class Throw {
+    public static void main(String[] args) {
+        int i = 10;
+        int j = 0;
+        try {
+            int k = divide(i, j);
+            System.out.println(k);
+        } catch (IllegalArgumentException e){
+            System.out.println(e.toString());
+        }
+
+    }
+
+    public static int divide(int i, int j) throws IllegalArgumentException{
+        if(j == 0){
+            throw new IllegalArgumentException("0으로 나눌 수 없습니다. ");
+        }
+        int k = i / j;
+        return k;
+    }
+}
+```
