@@ -247,3 +247,157 @@ Math는 private 이지만 모든 메서드가 static 처리가 되어있어
 ## java.util 패키지
 
 java.util패키지는 유용한 클래스들을 많이 가지고 있는 패키지다.
+
+## 컬랙션 프레임워크
+
+java.util패키지에는 자료를 다룰 수 있는 자료구조 클래스가 다수 존재한다.
+
+자료구조 클래스들을 컬렉션 프레임워크라고 한다.
+
+## Generic
+
+Box 클래스
+
+- Box는 매개변수로 Object를 하나 받아들이고, Object를 반환한다.
+- Object를 받아들일 수 있다는 것은 Object의 후손이라면 무엇이든 받아들일 수 있다는 것이다.
+- 클래스 이름 뒤에 `<E>` 가 제네릭을 적용한 것이다. Box는 가상의 클래스 E를 사용한다는 의미.
+- Object를 받아들이고, 리턴하던 부분이 E로 변경. E는 실제로 존재하는 클래스는 아니다.
+
+```
+public class Box<E> {
+    private E obj;
+
+    public void setObj(E obj){
+        this.obj = obj;
+    }
+
+    public E getObj(){
+        return obj;
+    }
+}
+```
+
+Box 클래스 사용하기
+
+```
+public class BoxExam {
+    public static void main(String[] args) {
+
+        Box<Object> box = new Box<>();
+        box.setObj(new Object());
+        Object obj = box.getObj();
+
+        Box<String> box2 = new Box<>();
+        box2.setObj("3");
+        String str = box2.getObj();
+        System.out.println(str);
+
+        Box<Integer> box3 = new Box<>();
+        box3.setObj(3);
+        int v2 = box3.getObj();
+    }
+}
+```
+
+- 참조타입에 `<Object> , <String>, <Integer>`가 있는 것을 볼 수 있다.
+- 각각 `Object, String, Integer`을 사용하는 인스턴스를 생성하는 것.
+- Generic을 사용하는 대표적인 클래스는 컬렉션 프레임워크와 관련된 클래스이다.
+
+## Set
+
+set은 중복이 없고, 순서도 없는 자료구조. Hashset과 TreeSet이 있다.
+
+iterator를 이용해 하나씩 내용물을 확인할 수 있다.
+
+```
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
+public class SetExam {
+    public static void main(String[] args) {
+        Set<String> set1 = new HashSet<>(); // set은 boolean 값을 반환.
+        boolean flag1 = set1.add("Hello");
+        boolean flag2 = set1.add("World");
+        boolean flag3 = set1.add("Hello");
+
+        System.out.println(set1.size());
+
+        System.out.println(flag1); // true
+        System.out.println(flag2); // true
+        System.out.println(flag3); // false
+
+        Iterator<String> iter = set1.iterator();
+        while(iter.hasNext()){
+            String str = iter.next();
+            System.out.println(str);
+            // Hello
+            // World
+        }
+    }
+}
+```
+
+## List
+
+list는 데이터의 중복이 있을 수 있고, 순서도 있다.
+
+배열은 한번 생성하면 크기 변경이 불가하지만,
+
+리스트는 저장공간을 자유롭게 변경 가능하다.
+
+```
+import java.util.ArrayList;
+import java.util.List;
+
+public class ListExam {
+    public static void main(String[] args) {
+        List<String> list = new ArrayList<>();
+        list.add("Hello");
+        list.add("World");
+        list.add("Hello");
+
+        for(int i = 0; i < list.size(); i++){
+            String str = list.get(i);
+            System.out.println(str);
+            // Hello
+            // World
+            // Hello
+        }
+    }
+}
+```
+
+## Map
+
+Map은 key와 value를 쌍으로 저장하는 자료구조이며, 키는 중복될 수 없고, 값은 중복될 수 있다.
+
+이미 존재하는 키에 값을 넣을경우, 값은 최신화 된다.
+
+```
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
+public class MapExam {
+    public static void main(String[] args) {
+        Map<String, String> map = new HashMap<>();
+        map.put("001", "kim");
+        map.put("002", "Lee");
+        map.put("003", "Park");
+
+        map.put("001", "Kang"); // 최신화 함.
+
+        Set<String> keys = map.keySet();
+        System.out.println(keys);
+
+        Iterator<String> iter = keys.iterator();
+        while(iter.hasNext()){
+            String key = iter.next();
+            String value = map.get(key);
+            System.out.println(key + ":" + value);
+        }
+    }
+}
+```
