@@ -5,6 +5,8 @@
 1. [Object 클래스](#1장-Object-클래스)
 2. [java.lang 패키지](#2장-java-lang-패키지)
 3. [java.util 패키지](#3장-java-util-패키지)
+4. [어노테이션](#4장-어노테이션)
+5. [쓰레드](#5장-쓰레드)
 
 # 1장 Object 클래스
 
@@ -400,4 +402,80 @@ public class MapExam {
         }
     }
 }
+```
+
+# 4장 어노테이션
+
+어노테이션은 Java5에 추가된 기능
+
+- 어노테이션은 클래스나 메소드위에 붙습니다. @(at)기호로 이름이 시작합니다.
+- 어노테이션을 클래스나 메타코드에 붙인 후, 클래스가 컴파일되거나 실행될 때 어노테이션의 유무나 어노테이션에 설정된 값을 통하여 클래스가 좀 더 다르게 실행되게 할 수 있습니다.이런 이유로 어노테이션을 일정의 설정파일처럼 설명하는 경우도 있습니다.
+- 어노테이션은 자바가 기본으로 제공해주는 것도 있고, 사용자가 직접 만들 수도 있습니다.
+- 사용자가 직접 작성하는 어노테이션을 Custom 어노테이션이라고 말합니다.
+
+- 커스텀 어노테이션을 이용하는 방법
+
+1. 어노테이션을 정의한다.
+2. 어노테이션을 클래스에서 사용한다. (타겟에 적용)
+3. 어노테이션을 이용하여 실행.
+
+# 5장 쓰레드
+
+## Thread
+
+쓰레드란?
+
+- 동시에 여러가지 작업을 수행할 수 있습니다.
+- 프로세스란 현재 실행되고 있는 프로그램을 말합니다.
+- 자바 프로그램은 JVM에 위해 실행된다. 이 JVM도 프로그램중에 하나이다.
+- 운영체제 입장으로 보면 자바도 하나의 프로세스로 실행을 하는 것입니다.
+- 워드프로세서가 하나의 프로세스라면, 하나의 프로세스 안에서도 여러개의 흐름이 동작할 수 있다. 이것은 Thread라고 말을 합니다.
+- 자바 그램이 여러개의 작업을 동시에 하게 만들고 싶다면 Thread를 공부해야 합니다.
+
+## Thread 만들기(extend Thread)
+
+자바에서 Thread를 만드는 방법은 크게 Thread 클래스를 상속받는 방법과 Runnable인터페이스를 구현하는 방법이 있다.
+
+Thread를 상속 받아서 쓰레드를 생성하는 방법
+
+- java.lang.Thread클래스를 상속받는다. 그리고 Thread가 가지고 있는 run()메소드를 오버라이딩한다.
+
+쓰레드 생성하기
+
+```
+public class Thread1 extends Thread {
+
+    String str;
+    public Thread1(String str){
+        this.str = str;
+    }
+
+    @Override
+    public void run() {
+        for (int i = 0; i < 10; i++){
+            System.out.println(str);
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+```
+
+쓰레드 실행하기
+
+```
+public class ThreadExam {
+    public static void main(String[] args) {
+        Thread1 t1 = new Thread1("*");
+        Thread1 t2 = new Thread1("-");
+
+        t1.start();
+        t2.start();
+    }
+}
+
 ```
