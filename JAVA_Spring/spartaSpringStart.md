@@ -2,6 +2,8 @@
 
 1. [스프링 시작하기](#1장-스프링-시작하기)
 2. [서버와 데이터베이스](#2장-서버와-데이터베이스)
+3. [프로젝트 생성과 API 설계](#3장-프로젝트와-API-설계)
+4. []
 
 # 1장 스프링 시작하기
 
@@ -319,3 +321,476 @@ ID  	CREATED_AT  	          MODIFIED_AT  	        TITLE  	TUTOR
 1   	2022-02-11 19:51:06.611	2022-02-11 19:51:06.611	스프링	남병관
 
 ```
+
+## JPA 심화
+
+CRUD란? 정보관리의 기본 기능들.
+→ 생성 (Create)
+→ 조회 (Read)
+→ 변경 (Update)
+→ 삭제 (Delete)
+
+JPA로 위의 기능을 구현해보자.
+
+우선 update를 하기 위해선 해당 함수롤 Course 클래스에 추가해야 한다.
+
+```
+public void update(Course course) {
+    this.title = course.title;
+    this.tutor = course.tutor;
+}
+```
+
+그 다음 service 패키지를 만들어 안에 서비스 클래스를 생성한다.
+
+서비스는 실제로 중요한 작동이 많이 일어나는 부분이다.
+
+또한 update는 service 부분에 작성한다!
+
+```
+@Service // 스프링에게 이 클래스는 서비스임을 명시
+public class CourseService {
+
+		// final: 서비스에게 꼭 필요한 녀석임을 명시
+    private final CourseRepository courseRepository;
+
+		// 생성자를 통해, Service 클래스를 만들 때 꼭 Repository를 넣어주도록
+		// 스프링에게 알려줌
+    public CourseService(CourseRepository courseRepository) {
+        this.courseRepository = courseRepository;
+    }
+
+    @Transactional // SQL 쿼리가 일어나야 함을 스프링에게 알려줌
+    public Long update(Long id, Course course) {
+        Course course1 = courseRepository.findById(id).orElseThrow(
+                () -> new NullPointerException("해당 아이디가 존재하지 않습니다.")
+        );
+        course1.update(course);
+        return course1.getId();
+    }
+}
+```
+
+그 다음, create 와 read, update를 구현한다.
+
+```
+courseRepository.save(new Course("프론트엔드의 꽃, 리액트", "임민영"));
+
+// Create, Read
+System.out.println("데이터 인쇄");
+List<Course> courseList = courseRepository.findAll();
+for (int i = 0; i < courseList.size(); i++) {
+    Course course = courseList.get(i);
+    System.out.println(course.getId());
+    System.out.println(course.getTitle());
+    System.out.println(course.getTutor());
+}
+
+// Update
+Course new_course = new Course("웹개발의 봄, Spring", "임민영");
+courseService.update(1L, new_course);
+courseList = courseRepository.findAll();
+for (int i = 0; i < courseList.size(); i++) {
+    Course course = courseList.get(i);
+    System.out.println(course.getId());
+    System.out.println(course.getTitle());
+    System.out.println(course.getTutor());
+}
+
+// Delete
+courseRepository.deleteAll(); // 모두 삭제하기
+```
+
+## Lombok
+
+- Lombok 소개
+  Lombok(이하 롬복)은, 자바 프로젝트를 진행하는데 거의 필수적으로 필요한 메소드/생성자 등을 자동생성해줌으로써 코드를 절약할 수 있도록 도와주는 라이브러리입니다.
+
+아래와 같이 있을때, getter를 삭제할 수 있습니다!
+
+```
+@NoArgsConstructor // 기본생성자를 대신 생성해줍니다.
+@Entity // 테이블임을 나타냅니다.
+public class Course extends Timestamped {
+
+    @Id // ID 값, Primary Key로 사용하겠다는 뜻입니다.
+    @GeneratedValue(strategy = GenerationType.AUTO) // 자동 증가 명령입니다.
+    private Long id;
+
+    @Column(nullable = false) // 컬럼 값이고 반드시 값이 존재해야 함을 나타냅니다.
+    private String title;
+
+    @Column(nullable = false)
+    private String tutor;
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public String getTutor() {
+        return this.tutor;
+    }
+
+    public Long getId() { return this.id; }
+
+    public Course(String title, String tutor) {
+        this.title = title;
+        this.tutor = tutor;
+    }
+
+    public void update(Course course) {
+        this.title = course.title;
+        this.tutor = course.tutor;
+    }
+}
+```
+
+제일 위의 `@Getter`를 한줄 추가해 getter를 대체 가능합니다.
+
+```
+@Getter <-- 추가!!
+@NoArgsConstructor // 기본생성자를 대신 생성해줍니다.
+@Entity // 테이블임을 나타냅니다.
+public class Course extends Timestamped {
+
+    @Id // ID 값, Primary Key로 사용하겠다는 뜻입니다.
+    @GeneratedValue(strategy = GenerationType.AUTO) // 자동 증가 명령입니다.
+    private Long id;
+
+    @Column(nullable = false) // 컬럼 값이고 반드시 값이 존재해야 함을 나타냅니다.
+    private String title;
+
+    @Column(nullable = false)
+    private String tutor;
+
+    public Course(String title, String tutor) {
+        this.title = title;
+        this.tutor = tutor;
+    }
+
+    public void update(Course course) {
+        this.title = course.title;
+        this.tutor = course.tutor;
+    }
+}
+```
+
+아래와 같은 코드에서도 Repository 기본생성자 코드를 줄일 수 있다.
+
+```
+@Service // 스프링에게 이 클래스는 서비스임을 명시
+public class CourseService {
+
+    // final: 서비스에게 꼭 필요한 녀석임을 명시
+    private final CourseRepository courseRepository;
+
+    // 생성자를 통해, Service 클래스를 만들 때 꼭 Repository를 넣어주도록
+    // 스프링에게 알려줌
+    public CourseService(CourseRepository courseRepository) {
+        this.courseRepository = courseRepository;
+    }
+
+    @Transactional // SQL 쿼리가 일어나야 함을 스프링에게 알려줌
+    public Long update(Long id, Course course) {
+        Course course1 = courseRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다.")
+        );
+        course1.update(course);
+        return course1.getId();
+    }
+}
+```
+
+제일 위 `@RequiredArgsConstructor`를 추가함으로서 기본 생성자를 대체할 수 있다.
+
+```
+@RequiredArgsConstructor
+@Service // 스프링에게 이 클래스는 서비스임을 명시
+public class CourseService {
+
+    // final: 서비스에게 꼭 필요한 녀석임을 명시
+    private final CourseRepository courseRepository;
+
+    @Transactional // SQL 쿼리가 일어나야 함을 스프링에게 알려줌
+    public Long update(Long id, Course course) {
+        Course course1 = courseRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("해당 아이디가 존재하지 않습니다.")
+        );
+        course1.update(course);
+        return course1.getId();
+    }
+}
+```
+
+## DTO
+
+테이블을 막 건드려도 될까?
+= read, update할 때 Course 클래스를 막 써도 될까?
+= 내가 아닌 다른 사람이 변경이라도 한다면?? 😱
+
+이때 완충재로 활용하는 것이
+DTO(Data Transfer Object)입니다.
+
+domain 폴더에 CourseRequestDto 생성
+
+```
+package com.sparta.week02.domain;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
+public class CourseRequestDto {
+    private final String title;
+    private final String tutor;
+}
+```
+
+그리고 기존에 사용하던 클래스를 DTO로 전부 교체해준다.
+
+DTO를 사용하는 중요한 이유는 DB에 직접 쓰이는 클래스를 사용하지 않고
+
+해당 클래스를 업데이트 하기 위해 같은 필드를 가진 클래스를 만들어 정보를 갈아 끼워주는 것이다.
+
+## API - GET
+
+- API
+  👉 클라이언트 - 서버 간의 약속입니다.
+
+  클라이언트가 정한대로 서버에게 요청(Request)을 보내면,
+  서버가 요구사항을 처리하여 응답(Response)을 반환합니다.
+
+- REST
+  👉 REST란, 주소에 명사, 요청 방식에 동사를 사용함으로써 의도를 명확히 드러냄을 의미합니다.
+
+  - 여기에 쓰이는 동사는 우리가 JPA 시간에 배운 CRUD를 지칭합니다.
+  - 즉 A에 대해 생성(POST)/조회(GET)/수정(PUT)/삭제(DELETE) 요청을 하는 것이죠.
+
+- 예시
+
+  - GET /courses
+    → 강의 전체 목록 조회 요청
+  - GET /courses/1
+    → ID가 1번인 녀석 조회 요청
+  - POST /courses
+    → 강의 생성 요청
+  - PUT /courses/3
+    → ID가 3번인 녀석 수정 요청
+  - DELETE /courses/2
+    → ID 2번인 녀석 삭제 요청
+
+- 주의사항
+
+  - 주소에 들어가는 명사들은 복수형을 사용합니다.
+    - /course
+  - 주소에 동사는 가급적 사용하지 않습니다.
+    - /accounts/edit
+
+## 데이터 조회 Api 만들기
+
+스프링 어플리케이션이 있는 위치에 `controller`패키지를 만들고 다음과 같은 파일을 만든다.
+
+```
+package com.sparta.week02.controller;
+
+import com.sparta.week02.domain.Course;
+import com.sparta.week02.domain.CourseRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RequiredArgsConstructor
+@RestController
+public class CourseController {
+
+    private final CourseRepository courseRepository;
+
+    @GetMapping("/api/courses")
+    public List<Course> getCourses() {
+        return courseRepository.findAll();
+    }
+}
+```
+
+http://localhost:8080/api/courses 해당 주소로 이동하면
+GET 방식으로 요청한 JSON 데이터를 볼 수 있다.
+
+- ARC
+  현업에서 API를 만들고 나면 각종 툴로 테스트 및 기능 확인을 정말 많이 하는데, ARC를 유용하게 사용할 수 있다.
+
+## POST PUT DELETE
+
+```
+@PostMapping("/api/courses")
+public Course createCourse(@RequestBody CourseRequestDto requestDto) {
+    // requestDto 는, 생성 요청을 의미합니다.
+    // 강의 정보를 만들기 위해서는 강의 제목과 튜터 이름이 필요하잖아요?
+    // 그 정보를 가져오는 녀석입니다.
+
+    // 저장하는 것은 Dto가 아니라 Course이니, Dto의 정보를 course에 담아야 합니다.
+    // 잠시 뒤 새로운 생성자를 만듭니다.
+    Course course = new Course(requestDto);
+
+    // JPA를 이용하여 DB에 저장하고, 그 결과를 반환합니다.
+    return courseRepository.save(course);
+}
+
+@PutMapping("/api/courses/{id}")
+public Long updateCourse(@PathVariable Long id, @RequestBody CourseRequestDto requestDto) {
+    return courseService.update(id, requestDto);
+}
+
+@DeleteMapping("/api/courses/{id}")
+public Long deleteCourse(@PathVariable Long id) {
+    courseRepository.deleteById(id);
+    return id;
+}
+```
+
+# 3장 프로젝트와 API 설계
+
+## API 설계하기
+
+- 메모 생성하기 POST /api/memos Memo
+- 메모 조회하기 GET /api/memos List
+- 메모 변경하기 PUT /api/memos/{id} Long
+- 메모 삭제하기 DELETE /api/memos/{id} Long
+
+## Repositiory 만들기
+
+- 메모는 1) 익명의 작성자 이름(username), 2) 메모 내용(contents) 으로 이루어져 있다.
+
+- domain 패키지를 만들고 다음 파일을 만든다.
+
+```
+package com.sparta.week03.domain;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface MemoRepository extends JpaRepository<Memo, Long> {
+    List<Memo> findAllByOrderByModifiedAtDesc();
+}
+```
+
+- 위의 JPA 코드처럼 사용자가 찾는 기준을 만들어서 코드를 작성할 수 있다.
+  https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods
+
+## DTO 만들기
+
+데이터를 변경, 추가할 때 테이블을 사용하지 않고
+
+해당 테이블에 들어갈 데이터를 가지고 있는 DTO를 만들어준다.
+
+```
+package com.sparta.week03.domain;
+
+import lombok.Getter;
+
+@Getter
+public class MemoRequestDto {
+    private String username;
+    private String contents;
+}
+```
+
+## Service 만들기
+
+메모 변경하기, 즉 업데이트 기능은 Service 단에서 작동하기 때문에
+서비스 패키지를 만들고 다음과 같은 파일을 만든다.
+
+```
+package com.sparta.week03.service;
+
+import com.sparta.week03.domain.Memo;
+import com.sparta.week03.domain.MemoRepository;
+import com.sparta.week03.domain.MemoRequestDto;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+
+@RequiredArgsConstructor
+@Service
+public class MemoService {
+
+    private final MemoRepository memoRepository;
+
+    @Transactional
+    public Long update(Long id, MemoRequestDto requestDto) {
+        Memo memo = memoRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
+        );
+        memo.update(requestDto);
+        return memo.getId();
+    }
+}
+```
+
+## Controller 만들기
+
+```
+package com.sparta.week03.controller;
+
+import com.sparta.week03.domain.Memo;
+import com.sparta.week03.domain.MemoRepository;
+import com.sparta.week03.domain.MemoRequestDto;
+import com.sparta.week03.service.MemoService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RequiredArgsConstructor
+@RestController
+public class MemoController {
+
+    private final MemoRepository memoRepository;
+    private final MemoService memoService;
+
+    @PostMapping("/api/memos")
+    public Memo createMemo(@RequestBody MemoRequestDto requestDto) {
+        Memo memo = new Memo(requestDto);
+        return memoRepository.save(memo);
+    }
+
+    @GetMapping("/api/memos")
+    public List<Memo> getMemos() {
+        return memoRepository.findAllByOrderByModifiedAtDesc();
+    }
+
+    @PutMapping("/api/memos/{id}")
+    public Long updateMemo(@PathVariable Long id, @RequestBody MemoRequestDto requestDto ){
+        return memoService.update(id, requestDto);
+    }
+
+    @DeleteMapping("/api/memos/{id}")
+    public Long deleteMemo(@PathVariable Long id) {
+        memoRepository.deleteById(id);
+        return id;
+    }
+}
+```
+
+## 클라이언트 설계하기
+
+1. 접속하자마자 메모 전체 목록 조회하기
+   1. GET API 사용해서 메모 목록 불러오기
+   2. 메모 마다 HTML 만들고 붙이기
+2. 메모 생성하기
+   1. 사용자가 입력한 메모 내용 확인하기
+   2. POST API 사용해서 메모 신규 생성하기
+   3. 화면 새로고침하여 업데이트 된 메모 목록 확인하기
+3. 메모 변경하기
+   1. 사용자가 클릭한 메모가 어떤 것인지 확인
+   2. 변경한 메모 내용 확인
+   3. PUT API 사용해서 메모 내용 변경하기
+   4. 화면 새로고침하여 업데이트 된 메모 목록 확인하기
+4. 메모 삭제하기
+   1. 사용자가 클릭한 메모가 어떤 것인지 확인
+   2. DELETE API 사용해서 메모 삭제하기
+   3. 화면 새로고침하여 업데이트 된 메모 목록 확인하기
