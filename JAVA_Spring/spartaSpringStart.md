@@ -4,6 +4,7 @@
 2. [서버와 데이터베이스](#2장-서버와-데이터베이스)
 3. [프로젝트 생성과 API 설계](#3장-프로젝트와-API-설계)
 4. [만들어진 API 사용하기](#4장-만들어진-API-사용하기)
+5. [MySQL, RDS, AWS 세팅](#5장-MySQL-RDS-AWS-세팅)
 
 # 1장 스프링 시작하기
 
@@ -796,3 +797,71 @@ public class MemoController {
    3. 화면 새로고침하여 업데이트 된 메모 목록 확인하기
 
 # 4장 만들어진 API 사용하기
+
+## 네이버 쇼핑 검색 API 사용하기
+
+1. 우선 아래 주소로 이동해서 검색 api를 신청하고, Client ID와 Client Secret을 받는다.
+
+```
+https://developers.naver.com/docs/search/shopping/
+```
+
+2. ARC를 이용해 URL에 검색하고자 하는걸 입력하고, Client ID와 Client Secret을 입력한다.
+
+3. ARC에서 CODE SNIPPETS로 가면 SPRING 에서 어떻게 입력해야 하는지 코드를 제공해준다! 이 코드를 복사한다.
+
+4. 스프링 프로젝트 생성 뒤, utils 패키지를 생성하고 다음과 같은 클래스 파일을 만든다.
+
+```
+package com.sparta.week04.utils;
+
+import org.springframework.http.*;
+import org.springframework.web.client.RestTemplate;
+
+public class NaverShopSearch {
+
+    ~~~ ARC 에서 복사한 코드!!! ~~~
+
+    }
+
+    public static void main(String[] args) {
+        NaverShopSearch naverShopSearch = new NaverShopSearch();
+        naverShopSearch.search();
+    }
+}
+```
+
+위의 클래스 파일을 실행시키면, url에 넣은 검색어에 맞춰 결과가 출력된다!!!
+
+## 프로젝트 설계하기
+
+- 필요한 기능 생성
+
+1. 키워드로 상품 검색하고 그 결과를 목록으로 보여주기
+2. 관심 상품 등록하기
+3. 관심 상품 조회하기
+4. 관심 상품에 원하는 가격 등록하고, 그 가격보다 낮은 경우 표시하기 (숙제!)
+
+- API 설계
+
+1. GET /api/search?query= 검색어 `List<itemDto>`
+2. POST /api/products `Product`
+3. GET /api/products `List<Product>`
+4. PUT /api/products/{id} `id`
+
+- 3계층 설계하기
+
+  1. Controller
+     - ProductRestController: 관심 상품 관련 컨트롤러
+     - SearchRequestController: 검색 관련 컨트롤러
+  2. Service
+     - ProductService: 관심 상품 가격 변경
+  3. Repository
+     👉 여기서 DB에 저장되는 녀석은 Product 뿐이라는 점!
+     - Product: 관심 상품 테이블
+     - ProductRepository: 관심 상품 조회, 저장
+     - ProductRequestDto: 관심 상품 등록하기
+     - ProductMypriceRequestDto: 관심 가격 변경하기
+     - ItemDto: 검색 결과 주고받기
+
+# 5장 MySQL RDS AWS 세팅
