@@ -10,7 +10,9 @@
 
 ## JAVA Spring
 
-- [스파르타 코딩 스프링 by 남병관](https://github.com/wowba/TIL/blob/main/JAVA_Spring/spartaSpringStart.md)
+- [스파르타 코딩 스프링 기초 by 남병관](https://github.com/wowba/TIL/blob/main/JAVA_Spring/spartaSpringStart.md)
+
+- [스파르타 코딩 스프링 심화 by 이태훈](https://github.com/wowba/TIL/blob/main/JAVA_Spring/spartaSpringUpgrade.md)
 
 - [스프링 입문, 코드로 배우는 스프링 부트 by 김영한](https://github.com/wowba/TIL/blob/main/JAVA_Spring/spring_start.md)
 
