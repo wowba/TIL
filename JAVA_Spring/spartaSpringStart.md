@@ -863,5 +863,3 @@ public class NaverShopSearch {
      - ProductRequestDto: 관심 상품 등록하기
      - ProductMypriceRequestDto: 관심 가격 변경하기
      - ItemDto: 검색 결과 주고받기
-
-# 5장 MySQL RDS AWS 세팅

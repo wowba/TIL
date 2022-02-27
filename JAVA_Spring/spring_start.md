@@ -327,3 +327,86 @@ RDB, NoSQL등 다양한 저장소 고민중
 개발을 진행하기 위해 초기에는 구현체로 가벼운 메모리 기반의 데이터 저장소 사용
 
 ## 회원 도메인과 리포지토리 만들기
+
+1. Member 클래스 생성
+
+```
+package hello.hellospring.domain;
+
+
+public class Member {
+
+    private Long id;
+    private String name;
+
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+```
+
+2. MemberRepository 인터페이스 생성
+
+```
+package hello.hellospring.repository;
+
+import hello.hellospring.domain.Member;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface MemberRepository {
+    Member save(Member member);
+    Optional<Member> findById(Long id); // 없다면 null을 반환한다.
+    Optional<Member> findByName(String name);
+    List<Member> findAll();
+}
+```
+
+3. MemoryMemberRepository 구현체 생성
+
+```
+package hello.hellospring.repository;
+
+import hello.hellospring.domain.Member;
+
+import java.util.*;
+
+public class MemoryMemberRepository implements MemberRepository{
+
+    private static Map<Long, Member> store = new HashMap<>(); // 실무에서는 동시성 문제가 있을 수 있어 사용하지 않는 방법!
+    private static long sequence = 0L; // 키값을 생성해 준다. 실무에서는 이렇게 하지 않는다.
+
+    @Override
+    public Member save(Member member) {
+        member.setId(++sequence);
+        store.put(member.getId(), member);
+        return member;
+    }
+    @Override
+    public Optional<Member> findById(Long id) {
+        return Optional.ofNullable(store.get(id));
+    }
+    @Override
+    public Optional<Member> findByName(String name) {
+        return store.values().stream()
+                .filter(member -> member.getName().equals(name))
+                .findAny();
+    }
+    @Override
+    public List<Member> findAll() {
+        return new ArrayList<>(store.values());
+    }
+}
+```
+
+## 회원 리포지토리 케이스 작성
