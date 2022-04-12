@@ -14,9 +14,7 @@
 
 - [스파르타 코딩 스프링 심화 by 이태훈](https://github.com/wowba/TIL/blob/main/JAVA_Spring/spartaSpringUpgrade.md)
 
-- [스프링 입문, 코드로 배우는 스프링 부트 by 김영한](https://github.com/wowba/TIL/blob/main/JAVA_Spring/spring_start.md)
-
-- [스프링 핵심 원리 by 김영한]()
+- [객체 지향 설계와 스프링](https://github.com/wowba/TIL/blob/main/JAVA_Spring/springCore.md)
 
 ## Data Structure & Algorithm
 
@@ -75,6 +73,10 @@
 - [Password Hashing](https://github.com/wowba/TIL/blob/main/mongoDB/passwordHashing.md)
 
 - [MongoStore](https://github.com/wowba/TIL/blob/main/mongoDB/mongoStore.md)
+
+## SQL
+
+- [SQL 첫걸음](https://github.com/wowba/TIL/blob/main/Database/sqlStart.md)
 
 ## Python
 
