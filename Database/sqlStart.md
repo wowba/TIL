@@ -228,3 +228,177 @@ SELECT 열명 FROM 테이블명 WHERE 조건식 ORDER BY 열명1, 열명2...
 
 - 오름차순에선 가장 먼저
 - 내림차순에선 가장 나중에
+
+---
+
+## 11강 결과 행 제한하기
+
+1. 행수 제한
+
+SELECT 명령으로는 결과값 반환 행의 개수를 제한할 수 있습니다.
+
+```sql
+SELECT 열명 FROM 테이블명 LIMIT 행수 [OFFSET 시작행]
+```
+
+```sql
+LIMIT 구 // MySQL과 PostgreSQL 에서 사용 가능
+SELECT 열명 FROM 테이블명 WHERE 조건식 ORDER BY 열명 LIMIT 행수
+```
+
+2. 오프셋 지정
+
+```sql
+SELECT 열명 FROM 테이블명 LIMIT 행수 OFFSET 시작지점
+```
+
+---
+
+## 12강 수치 연산
+
+```
+산술 연산
++ - * / % MOD
+```
+
+1. SELECT구를 이용해 연산하기  
+   열의 이름을 이용해 계산식을 작성할 수 있다. (price, quantity)
+
+```sql
+EX ) SELECT *, price * quantity FROM example;
+```
+
+2. 열의 별명
+
+```sql
+EX ) SELECT *, price * quantity AS amount FROM example;
+```
+
+계산을 통해 생긴 열의 이름을 AS 를 사용해 지정할 수 있다.
+
+3. WHERE 구에서 연산하기
+
+```sql
+EX ) SELECT *, price * quantity AS amount FROM example
+    WHERE price * quantity >= 2000;
+```
+
+여기서 amount가 아닌 price \* quantity로 했는데,  
+그 이유는 구 처리 순서가 WHERE -> SELECT 이기 때문이다.  
+즉, SELECT 내에서 지정한 별명은 WHERE에서 쓸 수 없다.
+
+4. NULL 연산
+
+SQL은 NULL값에 어떤 연산을 해도 결과는 NULL로 나온다.
+
+5. ORDER BY 구에서 연산하기
+
+```sql
+EX ) SELECT *, price * quantity AS amount FROM example
+    ORDER BY price * quantity DESC;
+```
+
+ORDER BY 구는 SELECT 후에 처리되기 때문에 별명 사용이 가능합니다.
+
+```sql
+EX ) SELECT *, price * quantity AS amount FROM example
+    ORDER BY amount DESC;
+```
+
+처리 순서는 WHERE -> SELECT -> ORDER BY 입니다.
+
+6. ROUND 함수
+
+단위가 소수점을 가질때 반올림을 하려면 ROUND 함수를 쓸 수 있습니다.
+
+```sql
+EX ) SELECT amount, ROUND(amount) FROM example;
+```
+
+Round 함수는 기본적으로 소수점 첫째 자리를 기준으로 반올림 하지만,  
+인수를 지정한 경우 해당 지점을 기준으로 반올림 합니다.
+
+```sql
+EX ) SELECT amount, ROUND(amount, 1) FROM example;
+```
+
+---
+
+## 13강 문자열 연산
+
+```
+문자열 연산자 종류
++, ||, CONCAT, SUBSTRING, TRIM, CHARACTER_LENGTH
+```
+
+1. 문자열 결합
+
+```
+문자열 결합 예시.
+'ABC' || '1234' -> 'ABC1234'
+```
+
+- SQL Server는 +
+- Oracle, DB2, postgreSQL은 ||
+- MySQL은 CONCAT을 이용해 문자열을 결합니다.
+
+```sql
+EX ) SELECT CONCAT(quantity, unit) AS total FROM example;
+```
+
+결합시 생성되는 열은 AS를 사용해 별명을 만들 수 있다.
+
+2. SUBSTRING 함수  
+   SUBSTRING 함수는 문자열의 일부분을 계싼해서 반환해주는 함수입니다.
+   ```
+   SUBSTRING('20110123', 1, 4) -> '2011'
+   ```
+3. TRIM 함수
+   TRIM 함수는 문자열의 앞뒤로 여분의 공간이 있으면 이를 제거합니다.
+   ```
+   TRIM('ABC   ') -> 'ABC'
+   ```
+4. CHARACTER_LENGTH 함수  
+   CHARACTER_LENGTH 함수는 문자열의 길이를 계산해 돌려줍니다.  
+   문자열 데이터의 길이는 사용하는 문자세트에 따라 다른데,  
+   UTF-8, EUC-KR 등등이 있습니다.
+
+---
+
+## 14강 날짜 연산
+
+```
+CURRENT_TIMESTAMP, CURRENT_DATE, INTERVAL
+```
+
+1. SQL에서 날짜  
+   날짜시간 데이터를 연산하면 결과값으로
+
+- 날짜시간 유형의 데이터
+- 간격을 나타내는 기간형(INTERVAL)  
+  의 데이터들을 반환합니다.
+
+  ```sql
+  시스템 날짜
+  SELECT CURRENT_TIMESTAMP;
+  ```
+
+날짜 데이터의 경우 서식을 지정할 수 있습니다.
+
+2. 날짜의 덧셈과 뺄셈  
+   날짜시간형 데이터는 기간형 수치데이터와 덧셈 및 뺄셈 가능.
+
+   ```sql
+    SELECT CURRENT_DATE + INTERVAL 1 DAY;
+   ```
+
+---
+
+## 15강 CASE 문으로 데이터 변환하기
+
+```sql
+CASE WHEN 조건식1 THEN 식1
+  [ WHEN 조건식2 THEN 식2 ...]
+  [ ELSE 식3]
+END
+```
