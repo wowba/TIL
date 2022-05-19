@@ -10,7 +10,7 @@
 
 - [자바스크립트란?](https://github.com/wowba/TIL/blob/main/JavaScript/basicJavascript.md)
 
-- [자바스크립트 기본 문법](https://github.com/wowba/TIL/blob/main/JavaScript/basicJavascriptsyntax.md)
+- [자바스크립트 기본 문법](https://github.com/wowba/TIL/blob/main/JavaScript/basicjavascriptsyntax.md)
 
 - [What Is NodeJS?](https://github.com/wowba/TIL/blob/main/JavaScript/nodejs.md)
 
