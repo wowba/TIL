@@ -30,11 +30,11 @@ HTML 요소는 시작 태그와 종료 태그 그리고 태그 사이에 위치�
 
 요소는 다른 요소를 포함할 수 있으며, 이때 부자관계 성립. 이러한 관계로 정보를 구조화한다.
 
-```
+```html
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
   </head>
   <body>
     <h1>안녕하세요</h1>
@@ -48,8 +48,8 @@ HTML 요소는 시작 태그와 종료 태그 그리고 태그 사이에 위치�
 content를 가질 수 없는 요소를 빈 요소라고 한다. 빈 요소는 content 가 없으며  
 attribute만 가질 수 있다.
 
-```
-<meeta charset="utf-8">
+```html
+<meeta charset="utf-8"></meeta>
 ```
 
 br hr img input link meta 등등이 있다.
@@ -68,7 +68,7 @@ id class hidden lang style title 등이 있다.
 검색 사이트에서 사용하는 검색 엔진은 로봇(Robot)이라는 프로그램을 이용해 정보를 수집하는데,  
 이 로봇은 웹사이트의 HTML 코드만으로 그 의미를 인지하며, 이때 시맨틱 요소를 해석하게 된다.
 
-```
+```html
 <font size="6"><b>Hello</b></font>
 <h1>Hello</h1>
 ```
@@ -114,11 +114,11 @@ html 태그는 모든 HTML 요소의 부모 요소이며 웹페이지에 단 하
 즉 모든 요소는 html 요소의 자식 요소이며 html 요소 내부에 기술해야 한다.  
 단 \<!DOCTYPE>은 예외로 처리한다.
 
-```
-<!DOCTYPE HTML>
+```html
+<!DOCTYPE html>
 <html lang="ko">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>문서 제목</title>
   </head>
   <body>
@@ -136,11 +136,11 @@ head 요소는 메타데이터를 포함하기 위한 요소이며 웹 페이지
 
 title 요소는 문서의 제목을 정의한다.
 
-```
+```html
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>문서 제목</title>
   </head>
   <body>
@@ -153,11 +153,11 @@ title 요소는 문서의 제목을 정의한다.
 
 style 요소에는 HTML 문서를 위한 style 정보를 정의한다.
 
-```
+```html
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>문서 제목</title>
     <style>
       body {
@@ -176,13 +176,13 @@ style 요소에는 HTML 문서를 위한 style 정보를 정의한다.
 
 link 요소에는 외부 리소스와의 연계 정보를 정의한다. 주로 HTML과 외부 CSS 파일 연계에 사용된다.
 
-```
+```html
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>문서 제목</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     Hello World!
@@ -194,14 +194,14 @@ link 요소에는 외부 리소스와의 연계 정보를 정의한다. 주로 H
 
 script 요소에는 client-side-JavaScript를 정의한다.
 
-```
+```html
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <script>
-      document.addEventListener('click', function () {
-        alert('Clicked!');
+      document.addEventListener("click", function () {
+        alert("Clicked!");
       });
     </script>
   </head>
@@ -213,11 +213,11 @@ script 요소에는 client-side-JavaScript를 정의한다.
 
 src attribute를 사용하면 외부 JS 파일을 로드할 수 있다.
 
-```
+```html
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <script src="main.js"></script>
   </head>
   <body>
@@ -230,15 +230,19 @@ src attribute를 사용하면 외부 JS 파일을 로드할 수 있다.
 
 meta 요소는 description, keywords, author, 기타 메타데이터의 정의에 사용된다.
 
-```
+```html
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="keywords" content="HTML, CSS, XML, XHTML, JavaScript"> // 검색엔진이 사용할 keywords
-    <meta name="description" content="Web tutorials on HTML and CSS"> // 웹페이지 설명
-    <meta name="author" content="John Doe"> // 저자
-    <meta http-equiv="refresh" content="30"> // 30초마다 리프레쉬
+    <meta charset="utf-8" />
+    <meta name="keywords" content="HTML, CSS, XML, XHTML, JavaScript" />
+    // 검색엔진이 사용할 keywords
+    <meta name="description" content="Web tutorials on HTML and CSS" />
+    // 웹페이지 설명
+    <meta name="author" content="John Doe" />
+    // 저자
+    <meta http-equiv="refresh" content="30" />
+    // 30초마다 리프레쉬
   </head>
   <body>
     <p>Hello World!</p>
@@ -297,13 +301,14 @@ Windows: C:\Users\{계정 명}
 현재 작업 디렉터리를 기준으로 특정 파일의 상대적인 위치를 가르킨다.
 ```
 
-```
+```html
 <!DOCTYPE html>
 <html>
   <body>
-    <a href="http://www.google.com">URL</a><br> // 절대 URL
-    <a href="html/my.html">Local file</a><br> // 상대 URL
-    <a href="#">fragment identifier</a><br> // 페이지 내 요소에 링크
+    <a href="http://www.google.com">URL</a><br />
+    // 절대 URL <a href="html/my.html">Local file</a><br />
+    // 상대 URL <a href="#">fragment identifier</a><br />
+    // 페이지 내 요소에 링크
     <a href="javascript:alert('Hello');">Javascript</a> // script
   </body>
 </html>
@@ -317,11 +322,13 @@ target 어트리뷰트는 링크를 클릭했을 때 윈도우를 어떻게 오�
 |\_self|링크를 클릭했을 때 연결문서를 현재 윈도우에서 오픈|
 |\_blank|링크를 클릭했을 때 연결문서를 새로운 윈도우나 탭에서 오픈|
 
-```
+```html
 <!DOCTYPE html>
 <html>
   <body>
-    <a href="http://www.google.com" target="_blank" rel="noopener noreferrer">Visit google.com!</a>
+    <a href="http://www.google.com" target="_blank" rel="noopener noreferrer"
+      >Visit google.com!</a
+    >
   </body>
 </html>
 ```
@@ -357,14 +364,14 @@ POST
 - REST API에서 POST는 특정 리소스의 생성을 요청함.
 ```
 
-```
+```html
 <!DOCTYPE html>
 <html>
   <body>
     <form action="http://jsonplaceholder.typicode.com/users" method="get">
-      ID: <input type="text" name="id" value="1"><br>
-      username: <input type="text" name="username" value="Bret"><br>
-      <input type="submit" value="Submit">
+      ID: <input type="text" name="id" value="1" /><br />
+      username: <input type="text" name="username" value="Bret" /><br />
+      <input type="submit" value="Submit" />
     </form>
   </body>
 </html>
@@ -390,13 +397,13 @@ ajax를 사용할 경우에는 태그 내에 존재하지 않아도 된다.
 input 태그는 빈 태그인 반면 button 태그는 텍스트 혹은 콘텐츠를 사용할 수 있다.  
 type 어트리뷰트는 반드시 지정하는것이 바람직하며 어트리뷰트 값으로 button, reset, submit을 지정할 수 있다.
 
-```
+```html
 <!DOCTYPE html>
 <html>
   <body>
     <button type="button" onclick="alert('Hello World!')">Click Me!</button>
 
-    <input type="button" value="Click Me!" onclick="alert('Hello world!')">
+    <input type="button" value="Click Me!" onclick="alert('Hello world!')" />
   </body>
 </html>
 ```
@@ -406,18 +413,18 @@ type 어트리뷰트는 반드시 지정하는것이 바람직하며 어트리�
 fieldset 태그는 관련된 입력 양식들을 그룹화할때 사용하며  
 legend 태그는 fieldset 태그 내에서 사용됨과 동시에 그룹화된 fieldset의 제목을 정의한다.
 
-```
+```html
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
   </head>
   <body>
-      <fieldset>
-        <legend>Login</legend>
-        Username <input type="text" name="username">
-        Password <input type="text" name="password">
-      </fieldset>
+    <fieldset>
+      <legend>Login</legend>
+      Username <input type="text" name="username" /> Password
+      <input type="text" name="password" />
+    </fieldset>
   </body>
 </html>
 ```

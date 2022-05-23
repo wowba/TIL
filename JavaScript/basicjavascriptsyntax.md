@@ -9,6 +9,10 @@
 7. [객체](#객체)
 8. [배열](#배열)
 9. [변수 호이스팅](#변수-호이스팅)
+10. [비교 연산자](#비교-연산자)
+11. [typeof 연산자](#typeof-연산자)
+12. [switch 문](#switch-문)
+13. [타입 변환](#타입-변환)
 
 ## 변수
 
@@ -24,7 +28,7 @@ x = 6; 변수 할당
 
 ## 값
 
-```
+```javascript
 var str = "Hello World";
 변수 선언 및 문자열 리터럴을 값으로 할당.
 ```
@@ -77,13 +81,13 @@ function() {}
 자바스크립트는 C나 Java와는 다르게 변수를 선언할 때 데이터 타입을 미리 지정하지 않는다.  
 변수에 할당된 값의 타입에 의해 동적으로 변수의 타입이 결정된다. 이를 동적 타이핑이라 하며 자바스크립트의 특징중 하나이다.
 
-```
+```javascript
 // Number
 var num1 = 1001;
-var num2 = 10.50;
+var num2 = 10.5;
 
 // String
-var string1 = 'Hello';
+var string1 = "Hello";
 var string2 = "World";
 
 // Boolean
@@ -96,13 +100,13 @@ var foo = null;
 var bar;
 
 // Object
-var obj = { name: 'Lee', gender: 'male' };
+var obj = { name: "Lee", gender: "male" };
 
 // Array
-var array = [ 1, 2, 3 ];
+var array = [1, 2, 3];
 
 // function
-var foo = function() {};
+var foo = function () {};
 ```
 
 ## 연산자
@@ -110,24 +114,24 @@ var foo = function() {};
 연산자는 하나 이상의 표현식을 대상으로 산술, 할당, 비교, 논리, 타입 연산등을 수행해 하나의 값을 만든다.  
 이때 연산의 대상을 피연산자 라고 한다.
 
-```
+```javascript
 // 산술 연산자
 var area = 5 * 4; // 20
 
 // 문자열 연결 연산자
-var str = 'My name is ' + 'Lee'; // "My name is Lee"
+var str = "My name is " + "Lee"; // "My name is Lee"
 
 // 할당 연산자
-var color = 'red'; // "red"
+var color = "red"; // "red"
 
 // 비교 연산자
 var foo = 3 > 5; // false
 
 // 논리 연산자
-var bar = (5 > 3) && (2 < 4);  // true
+var bar = 5 > 3 && 2 < 4; // true
 
 // 타입 연산자
-var type = typeof 'Hi'; // "string"
+var type = typeof "Hi"; // "string"
 
 // 인스턴스 생성 연산자
 var today = new Date(); // Sat Dec 01 2018 00:57:19 GMT+0900 (한국 표준시)
@@ -135,21 +139,21 @@ var today = new Date(); // Sat Dec 01 2018 00:57:19 GMT+0900 (한국 표준시)
 
 피연산자의 타입은 반드시 일치할 필요는 없다. 이때 자바스크립트는 암묵적 타입 강제 변환을 통해 연산을 수행한다.
 
-```
-var foo = 1 + '10'; // '110'
-var bar = 1 * '10'; // 10
+```javascript
+var foo = 1 + "10"; // '110'
+var bar = 1 * "10"; // 10
 ```
 
 ## 키워드
 
 키워드는 수행할 동작을 규정한 것. 예로 var 키워드는 새로운 변수를 생성할 것을 지시.
 
-```
+```javascript
 // 변수의 선언
 var x = 5 + 6;
 
 // 함수의 선언
-function foo (arg) {
+function foo(arg) {
   // 함수 종료 및 값의 반환
   return ++arg;
 }
@@ -183,7 +187,7 @@ while (1) {
 
 함수는 호출에 의해 실행된다.
 
-```
+```javascript
 // 함수의 정의(함수 선언문)
 function square(number) {
   return number * number;
@@ -202,13 +206,13 @@ square(2); // 4
 자바스크립트의 함수는 일급 객체이므로 값으로 취급할 수 있다. 따라서 프로퍼티 값으로 함수를 사용할 수 있으며  
 프로퍼티 값이 함수일 경우 일반 함수와 구분하기 위해 메소드라고 부른다.
 
-```
+```javascript
 var person = {
-  name: 'Lee',
-  gender: 'male',
+  name: "Lee",
+  gender: "male",
   sayHello: function () {
-    console.log('Hi! My name is ' + this.name);
-  }
+    console.log("Hi! My name is " + this.name);
+  },
 };
 
 console.log(typeof person); // object
@@ -227,7 +231,7 @@ person.sayHello(); // Hi! My name is Lee
 
 배열은 1개의 변수에 여러 개의 값을 순차적으로 저장할 때 사용한다. 자바스크립트의 배열은 객체이며 내장 메소드를 포함한다.
 
-```
+```javascript
 var arr = [1, 2, 3, 4, 5];
 
 console.log(arr[1]); // 2
@@ -235,7 +239,7 @@ console.log(arr[1]); // 2
 
 ## 변수 호이스팅
 
-```
+```javascript
 console.log(foo); // ① undefined
 var foo = 123;
 console.log(foo); // ② 123
@@ -248,7 +252,7 @@ console.log(foo); // ③ 456
 1행에서 코드 순서상 ReferenceError: foo is not defined 가 나와야 하지만 undefined 라고 출력된다.  
 그 이유는 자바스크립트의 특징으로 모든 선언문은 호이스팅 되기 때문이다.
 
-호이스팅이란 자바스크립트의 모든 선언문이 해당 Scope의 선두로 옮겨진 것을 말한다. 즉, 자바스크립트는 모든 선언문이 선인되기 이전에 참조 가능하다.
+호이스팅이란 자바스크립트의 모든 선언문이 해당 Scope의 선두로 옮겨진 것을 말한다. 즉, 자바스크립트는 모든 선언문이 선언되기 이전에 참조 가능하다.
 
 변수가 생성되는 과정은 다음과 같다.
 
@@ -291,3 +295,132 @@ var 키워드로 선언된 변수는 아래와 같은 특징을 갖는다.
 전역 변수는 유효 범위가 넓어서 어디에서 어떻게 사용될지 파악하기 힘들고, 이는 의도치 않은 변수의 변경이 발생할 수 있는 가능성이 증가한다.  
 또한 여러 함수와 상호 의존하는 등 부수 효과가 있을 수 있어서 복잡성이 증가한다.  
 즉, 변수의 유효 범위는 좁을수록 좋다. 이 단점을 보완하기 위해 let과 const 키워드를 도입하였다.
+
+# 비교 연산자
+
+비교 연산자는 좌항과 우항의 피연산자를 비교, Boolean 값을 반환한다.
+
+## 동등 / 일치 비교 연산자
+
+| 비교 연산자 | 의미        | 사례    | 설명                     |
+| ----------- | ----------- | ------- | ------------------------ |
+| ==          | 동등 비교   | x == y  | x와 y의 값이 같음        |
+| ===         | 일치 비교   | x === y | x와 y의 값과 타입이 같음 |
+| !=          | 부등 비교   | x != y  | x와 y의 값이 다름        |
+| !==         | 불일치 비교 | x !== y | x와 y의 값과 타입이 다름 |
+
+주의! 동등 비교 연산자는 수많은 부작용을 야기하므로 보통 일치, 불일치 연산자를 사용한다.
+
+# 삼항 연산자
+
+삼항 조건 연산자는 조건식의 결과에 따라 반환할 값을 결정한다.  
+자바스크립트의 유일한 삼항 연산자이며 부수 효과는 없고, 다음과 같이 표기한다.
+
+```
+조건식 ? 조건식이 true일때 반환할 값 : 조건식이 false 일때 반환할 값
+```
+
+```javascript
+var x = 2;
+var result = x % 2 ? "홀수" : "짝수";
+
+console.log(result); // 짝수
+```
+
+# typeof 연산자
+
+typeof 연산자는 자신의 뒤에 위치한 피연산자의 데이터 타입을 문자열로 반환한다.
+
+```javascript
+typeof ""; // "string"
+typeof 1; // "number"
+typeof NaN; // "number"
+typeof true; // "boolean"
+typeof undefined; // "undefined"
+typeof Symbol(); // "symbol"
+typeof null; // "object"
+typeof []; // "object"
+typeof {}; // "object"
+typeof new Date(); // "object"
+typeof /test/gi; // "object"
+typeof function () {}; // "function"
+```
+
+하지만 null을 비교할 경우에는 일치 연산자를 사용해야 한다.
+
+```javascript
+var foo = null;
+console.log(typeof foo === null); // false
+console.log(foo === null); // true
+```
+
+# switch 문
+
+switch문은 switch문의 표현식을 평가, 그 값과 일치하는 표현식을 갖는 case 문으로 실행 순서를 이동시킨다.  
+case 문은 상황을 의미하는 표현식을 지정하고 콜론으로 마친다. 그리고 그 뒤 실행할 문들을 위치시킨다.  
+switch 문의 표현식과 일치하는 표현식을 갖는 case 문이 없다면 실행 순서는 default 문으로 이동한다.
+
+```javascript
+switch (표현식) {
+  case 표현식1:
+    switch 문의 표현식과 표현식1이 일치하면 실행될 문;
+    break;
+  case 표현식2:
+    switch 문의 표현식과 표현식2가 일치하면 실행될 문;
+    break;
+  default:
+    switch 문의 표현식과 일치하는 표현식을 갖는 case 문이 없을 때 실행될 문;
+}
+```
+
+예시
+
+```javascript
+var month = 11;
+var monthName;
+
+switch (month) {
+  case 10:
+    monthName = "October";
+    break;
+  case 11:
+    monthName = "November";
+    break;
+  case 12:
+    monthName = "December";
+    break;
+  default:
+    monthName = "Invalid month";
+}
+
+console.log(monthName); // November
+```
+
+만약 case문에 break;가 없다면, 계속해서 switch 문을 탐색하고 default문을 실행시킨다.
+
+# 타입 변환
+
+자바스크립트의 모든 값은 타입이 존재하며, 다른 타입으로 의도적으로 변환되거나  
+자바스크립트 엔진에 의해 암묵적으로 자동 변환될 수 있다.  
+개발자에 의해 의도적으로 값의 타입을 변경하는 것을 명시적 타입 변환 혹은 타입 캐스팅 이라 한다.
+
+```javascript
+var x = 10;
+
+// 명시적 타입 변환
+var str = x.toString(); // 숫자를 문자열로 타입 캐스팅한다.
+console.log(typeof str); // string
+```
+
+```javascript
+var x = 10;
+
+// 암묵적 타입 변환
+// 숫자 타입 x의 값을 바탕으로 새로운 문자열 타입의 값을 생성해 표현식을 평가한다.
+var str = x + "";
+
+console.log(typeof str, str); // string 10
+
+// 변수 x의 값이 변경된 것은 아니다.
+console.log(x); // 10
+```
