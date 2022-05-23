@@ -13,6 +13,7 @@
 11. [typeof 연산자](#typeof-연산자)
 12. [switch 문](#switch-문)
 13. [타입 변환](#타입-변환)
+14. [타입 체크](#타입-체크)
 
 ## 변수
 
@@ -423,4 +424,138 @@ console.log(typeof str, str); // string 10
 
 // 변수 x의 값이 변경된 것은 아니다.
 console.log(x); // 10
+```
+
+# 타입 체크
+
+자바스크립트는 동적 타입 언어이므로 변수에 어떤 값이 할당될 지 예측하기 어렵다.
+
+```javascript
+function sum(a, b) {
+  return a + b;
+}
+```
+
+위의 함수는 number타입을 받는 걸수도 있지만, 문자열 더하기도 가능하다.
+
+```javascript
+function sum(a, b) {
+  return a + b;
+}
+
+sum("x", "y"); // 'xy'
+```
+
+자바스크립트의 동적 타이핑에 의한 것이며, 이런 이유로 타입 체크가 필요하다.
+
+## Object.prototype.toString
+
+Object.prototype.toString 메소드는 객체를 나타내는 문자열을 반환한다.
+Function.prototype.call 메소드를 사용하면 모든 타입의 값의 타입을 알아낼 수 있다.
+
+```javascript
+Object.prototype.toString.call(""); // [object String]
+Object.prototype.toString.call(new String()); // [object String]
+Object.prototype.toString.call(1); // [object Number]
+Object.prototype.toString.call(new Number()); // [object Number]
+Object.prototype.toString.call(NaN); // [object Number]
+Object.prototype.toString.call(Infinity); // [object Number]
+Object.prototype.toString.call(true); // [object Boolean]
+Object.prototype.toString.call(undefined); // [object Undefined]
+Object.prototype.toString.call(); // [object Undefined]
+Object.prototype.toString.call(null); // [object Null]
+Object.prototype.toString.call([]); // [object Array]
+Object.prototype.toString.call({}); // [object Object]
+Object.prototype.toString.call(new Date()); // [object Date]
+Object.prototype.toString.call(Math); // [object Math]
+Object.prototype.toString.call(/test/i); // [object RegExp]
+Object.prototype.toString.call(function () {}); // [object Function]
+Object.prototype.toString.call(document); // [object HTMLDocument]
+Object.prototype.toString.call(argument); // [object Arguments]
+Object.prototype.toString.call(undeclared); // ReferenceError
+```
+
+이것을 이용하여 타입을 반환하는 함수를 만들어보자.
+
+```javascript
+function getType(target) {
+  return Object.prototype.toString.call(target).slice(8, -1);
+}
+```
+
+```javascript
+getType(""); // String
+getType(1); // Number
+getType(true); // Boolean
+getType(undefined); // Undefined
+getType(null); // Null
+getType({}); // Object
+getType([]); // Array
+getType(/test/i); // RegExp
+getType(Math); // Math
+getType(new Date()); // Date
+getType(function () {}); // Function
+```
+
+이제 앞에서 살펴본 sum 함수에 타입 체크 기능을 추가해 보자.
+
+```javascript
+function sum(a, b) {
+  // a와 b가 number 타입인지 체크
+  if (getType(a) !== "Number" || getType(b) !== "Number") {
+    throw new TypeError("파라미터에 number 타입이 아닌 값이 할당되었습니다.");
+  }
+  return a + b;
+}
+
+console.log(sum(10, 20)); // 30
+console.log(sum("10", 20)); // TypeError
+```
+
+타입별로 체크하는 기능을 만들려면 아래와 같이 함수를 작성한다.
+
+```javascript
+function getType(target) {
+  return Object.prototype.toString.call(target).slice(8, -1);
+}
+
+function isString(target) {
+  return getType(target) === "String";
+}
+
+function isNumber(target) {
+  return getType(target) === "Number";
+}
+
+function isBoolean(target) {
+  return getType(target) === "Boolean";
+}
+
+function isNull(target) {
+  return getType(target) === "Null";
+}
+
+function isUndefined(target) {
+  return getType(target) === "Undefined";
+}
+
+function isObject(target) {
+  return getType(target) === "Object";
+}
+
+function isArray(target) {
+  return getType(target) === "Array";
+}
+
+function isDate(target) {
+  return getType(target) === "Date";
+}
+
+function isRegExp(target) {
+  return getType(target) === "RegExp";
+}
+
+function isFunction(target) {
+  return getType(target) === "Function";
+}
 ```
