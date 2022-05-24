@@ -14,6 +14,12 @@
 
 - [자바스크립트 객체](https://github.com/wowba/TIL/blob/main/JavaScript/basicjavascriptobject.md)
 
+- [자바스크립트 Ajax](https://github.com/wowba/TIL/blob/main/JavaScript/basicjavascriptajax.md)
+
+- [자바스크립트 ES6 part one](https://github.com/wowba/TIL/blob/main/JavaScript/basicjavascriptes6partone.md)
+
+- [자바스크립트 ES6 part two](https://github.com/wowba/TIL/blob/main/JavaScript/basicjavascriptes6parttwo.md)
+
 - [What Is NodeJS?](https://github.com/wowba/TIL/blob/main/JavaScript/nodejs.md)
 
 - [NPM](https://github.com/wowba/TIL/blob/main/JavaScript/npm.md)

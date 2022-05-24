@@ -1,10 +1,8 @@
-var foo = { val: 10 };
-var bar = { val: 10 };
+// ES6 Destructuring
+const obj = { firstName: "Ungmo", lastName: "Lee" };
 
-console.log(foo.val, bar.val); // 10 10
-console.log(foo.val === bar.val); // false
+// 프로퍼티 키를 기준으로 디스트럭처링 할당이 이루어진다. 순서는 의미가 없다.
+// 변수 lastName, firstName가 선언되고 obj(initializer(초기화자))가 Destructuring(비구조화, 파괴)되어 할당된다.
+const { lastName, firstName } = obj;
 
-var baz = bar;
-
-console.log(baz.val, bar.val); // 10 10
-console.log(baz === bar);
+console.log(firstName); // Ungmo Lee
