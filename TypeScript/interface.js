@@ -20,3 +20,8 @@ function addTodo(todo) {
 const newTodo = { id: 1, content: `typescript`, completed: false };
 addTodo(newTodo);
 console.log(todos);
+// 함수 인터페이스를 구현하는 함수는 인터페이스를 준수해야 함.
+const squareFunc = function (num) {
+    return num * num;
+};
+console.log(squareFunc(10));
